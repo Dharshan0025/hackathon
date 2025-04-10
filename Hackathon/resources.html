@@ -3,257 +3,1212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindMate - Personalized Resources</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>MindMate | Personalized Mental Wellness Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Dynamic Color Variables */
+        /* ========== CSS Variables ========== */
         :root {
-            --primary: #6C63FF;
-            --secondary: #FF6584;
-            --bg-gradient: linear-gradient(135deg, #6C63FF 0%, #FF6584 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
+            /* Base Colors */
+            --primary: #5E81F4;
+            --primary-light: #A0B8FF;
+            --secondary: #FF7AC6;
+            --accent: #7FDBFF;
+            --dark: #1A1D28;
+            --light: #F8FAFC;
+            --gray: #E2E8F0;
+            --dark-gray: #4A5568;
+            
+            /* Theme Colors */
+            --calm-primary: #4C6EF5;
+            --calm-secondary: #63B3ED;
+            --energetic-primary: #F56565;
+            --energetic-secondary: #F6AD55;
+            --hopeful-primary: #68D391;
+            --hopeful-secondary: #F6E05E;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Typography */
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+            
+            /* Transitions */
+            --transition-fast: all 0.15s ease;
+            --transition-normal: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
+            
+            /* Border Radius */
+            --rounded-sm: 4px;
+            --rounded-md: 8px;
+            --rounded-lg: 12px;
+            --rounded-xl: 16px;
+            --rounded-full: 9999px;
+            
+            /* Current Theme */
+            --current-primary: var(--primary);
+            --current-secondary: var(--secondary);
         }
 
+        /* ========== Base Styles ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            padding: 2rem;
-            transition: all 0.5s ease;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
 
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ========== Utility Classes ========== */
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 var(--space-md);
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .section {
+            padding: var(--space-xl) 0;
         }
 
-        .category-selector {
-            display: flex;
+        .section-title {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-md);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--current-primary);
+            border-radius: var(--rounded-full);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--rounded-md);
+            font-weight: 500;
+            transition: var(--transition-normal);
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--current-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: var(--current-secondary);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--current-primary);
+            border: 1px solid var(--current-primary);
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--rounded-xl);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ========== Layout Components ========== */
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            z-index: 100;
+            transition: var(--transition-normal);
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            color: var(--current-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .logo-icon {
+            font-size: var(--text-2xl);
+        }
+
+        .nav-list {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            padding: var(--space-xs) 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--current-primary);
+            transition: var(--transition-normal);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: var(--text-xl);
+        }
+
+        /* Mood Selector */
+        .mood-selector {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background: white;
+            border-radius: var(--rounded-lg) 0 0 var(--rounded-lg);
+            box-shadow: var(--shadow-md);
+            z-index: 90;
+        }
+
+        .mood-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-lg);
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .mood-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px white, 0 0 0 5px var(--current-primary);
+        }
+
+        .mood-tooltip {
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--dark);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--rounded-sm);
+            font-size: var(--text-sm);
+            white-space: nowrap;
+            margin-right: var(--space-sm);
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-normal);
+        }
+
+        .mood-btn:hover .mood-tooltip {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(94, 129, 244, 0.1) 0%, rgba(127, 219, 255, 0.05) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: var(--text-4xl);
+            margin-bottom: var(--space-md);
+            line-height: 1.2;
+        }
+
+        .hero-text {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-lg);
+            color: var(--dark-gray);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            max-width: 600px;
+            z-index: -1;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .feature-card {
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: var(--space-xl);
+            color: var(--current-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .feature-title {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-sm);
+        }
+
+        /* Resources Section */
+        .resources-tabs {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
             flex-wrap: wrap;
         }
 
-        .category-btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 25px;
-            background: var(--card-bg);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .tab-btn {
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--rounded-full);
+            background: white;
+            border: 1px solid var(--gray);
+            transition: var(--transition-normal);
         }
 
-        .category-btn.active {
-            background: var(--primary);
+        .tab-btn.active {
+            background: var(--current-primary);
             color: white;
+            border-color: var(--current-primary);
         }
 
         .resources-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-lg);
         }
 
         .resource-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 1.5rem;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .resource-card:hover {
-            transform: translateY(-5px);
+        .resource-img {
+            height: 160px;
+            object-fit: cover;
+            width: 100%;
         }
 
-        .resource-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .resource-content {
+            padding: var(--space-md);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-category {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--gray);
+            border-radius: var(--rounded-sm);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-sm);
         }
 
         .resource-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #333;
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-sm);
         }
 
         .resource-desc {
-            color: #666;
-            margin-bottom: 1rem;
+            color: var(--dark-gray);
+            margin-bottom: var(--space-md);
+            flex: 1;
         }
 
-        .mood-indicator {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
+        .resource-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-duration {
+            font-size: var(--text-sm);
+            color: var(--dark-gray);
+        }
+
+        /* Mood Tracker */
+        .mood-tracker {
+            background: linear-gradient(135deg, var(--current-primary) 0%, var(--current-secondary) 100%);
+            color: white;
+            border-radius: var(--rounded-xl);
+            padding: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mood-tracker::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .mood-tracker-title {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-sm);
+        }
+
+        .mood-tracker-text {
+            margin-bottom: var(--space-md);
+            opacity: 0.9;
+        }
+
+        .mood-options {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .mood-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-lg);
+            background: rgba(255, 255, 255, 0.2);
+            transition: var(--transition-normal);
+            cursor: pointer;
+        }
+
+        .mood-option:hover {
+            transform: scale(1.1);
+        }
+
+        .mood-option.active {
+            background: white;
+            color: var(--current-primary);
+            transform: scale(1.1);
+        }
+
+        /* Journal Section */
+        .journal-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+        }
+
+        .journal-prompt {
+            background: white;
+            border-radius: var(--rounded-xl);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .prompt-title {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-md);
+            color: var(--current-primary);
+        }
+
+        .prompt-text {
+            margin-bottom: var(--space-md);
+        }
+
+        .journal-entry {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .journal-textarea {
+            flex: 1;
+            padding: var(--space-md);
+            border: 1px solid var(--gray);
+            border-radius: var(--rounded-lg);
+            resize: none;
+            font-family: inherit;
+            margin-bottom: var(--space-md);
+            transition: var(--transition-normal);
+        }
+
+        .journal-textarea:focus {
+            outline: none;
+            border-color: var(--current-primary);
+            box-shadow: 0 0 0 2px rgba(94, 129, 244, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: var(--space-xl) 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+        }
+
+        .footer-logo {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            display: inline-block;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: var(--space-xs);
+        }
+
+        .footer-link a {
+            opacity: 0.8;
+            transition: var(--transition-fast);
+        }
+
+        .footer-link a:hover {
+            opacity: 1;
+            color: var(--current-primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-normal);
+        }
+
+        .social-icon:hover {
+            background: var(--current-primary);
+            transform: translateY(-3px);
+        }
+
+        /* ========== Theme Classes ========== */
+        .theme-calm {
+            --current-primary: var(--calm-primary);
+            --current-secondary: var(--calm-secondary);
+        }
+
+        .theme-energetic {
+            --current-primary: var(--energetic-primary);
+            --current-secondary: var(--energetic-secondary);
+        }
+
+        .theme-hopeful {
+            --current-primary: var(--hopeful-primary);
+            --current-secondary: var(--hopeful-secondary);
+        }
+
+        /* ========== Animations ========== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ========== Responsive Styles ========== */
+        @media (max-width: 992px) {
+            .hero-image {
+                opacity: 0.3;
+            }
+            
+            .journal-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            .resources-grid {
-                grid-template-columns: 1fr;
+            .nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: var(--space-md);
+                box-shadow: var(--shadow-md);
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: var(--transition-normal);
+                z-index: 99;
             }
             
-            .category-btn {
-                flex: 1;
-                min-width: 150px;
+            .nav.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-actions {
+                justify-content: center;
+            }
+            
+            .mood-selector {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                border-radius: 0;
+                padding: var(--space-sm) var(--space-md);
+            }
+            
+            .mood-tooltip {
+                top: auto;
+                bottom: 100%;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                margin-right: 0;
+                margin-bottom: var(--space-sm);
             }
         }
 
-        /* Dynamic Theme Colors */
-        .theme-calm { --primary: #4A90E2; --secondary: #7CE0D6; }
-        .theme-energetic { --primary: #FF6B6B; --secondary: #FFE66D; }
-        .theme-neutral { --primary: #6C63FF; --secondary: #FF6584; }
+        @media (max-width: 576px) {
+            .section {
+                padding: var(--space-lg) 0;
+            }
+            
+            .section-title {
+                font-size: var(--text-2xl);
+            }
+            
+            .hero-title {
+                font-size: var(--text-3xl);
+            }
+            
+            .hero-text {
+                font-size: var(--text-base);
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
-<body>
-    <div class="mood-indicator" id="moodIndicator"></div>
+<body class="theme-calm">
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-brain logo-icon"></i>
+                <span>MindMate</span>
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#resources" class="nav-link">Resources</a></li>
+                    <li><a href="#tracker" class="nav-link">Mood Tracker</a></li>
+                    <li><a href="#journal" class="nav-link">Journal</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
     
-    <div class="container">
-        <div class="header">
-            <h1>Your Personalized Resources 🌟</h1>
-            <p>Curated suggestions based on your current mood</p>
-        </div>
-
-        <div class="category-selector">
-            <button class="category-btn active" data-category="all">All</button>
-            <button class="category-btn" data-category="movies">🎬 Movies</button>
-            <button class="category-btn" data-category="music">🎵 Music</button>
-            <button class="category-btn" data-category="books">📚 Books</button>
-            <button class="category-btn" data-category="activities">🧘 Activities</button>
-        </div>
-
-        <div class="resources-grid" id="resourcesGrid">
-            <!-- Resources will be populated by JavaScript -->
-        </div>
+    <!-- Mood Selector -->
+    <div class="mood-selector">
+        <button class="mood-btn active" data-theme="calm">
+            😌
+            <span class="mood-tooltip">Calm Mode</span>
+        </button>
+        <button class="mood-btn" data-theme="energetic">
+            😊
+            <span class="mood-tooltip">Energetic Mode</span>
+        </button>
+        <button class="mood-btn" data-theme="hopeful">
+            🌟
+            <span class="mood-tooltip">Hopeful Mode</span>
+        </button>
     </div>
-
-    <script>
-        // Simulated mood-based data
-        const resources = {
-            movies: [
-                { 
-                    title: "Peaceful Nature Documentaries",
-                    desc: "Relaxing visual journeys through nature",
-                    icon: "fa-film"
-                },
-                { 
-                    title: "Inspirational Biographies",
-                    desc: "Stories of resilience and triumph",
-                    icon: "fa-heart"
-                }
-            ],
-            music: [
-                {
-                    title: "Calming Piano Melodies",
-                    desc: "Soothing instrumental compositions",
-                    icon: "fa-music"
-                }
-            ],
-            books: [
-                {
-                    title: "The Power of Now",
-                    desc: "Mindfulness and present moment awareness",
-                    icon: "fa-book"
-                }
-            ],
-            activities: [
-                {
-                    title: "5-Minute Breathing Exercise",
-                    desc: "Reduce anxiety with guided breathing",
-                    icon: "fa-spa"
-                }
-            ]
-        };
-
-        // Initialize resources
-        function populateResources(category = 'all') {
-            const grid = document.getElementById('resourcesGrid');
-            grid.innerHTML = '';
-
-            for (const [cat, items] of Object.entries(resources)) {
-                if(category !== 'all' && category !== cat) continue;
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Your Personal Mental Wellness Companion</h1>
+                <p class="hero-text">Discover curated resources, track your mood, and find peace with personalized tools designed to support your mental health journey.</p>
+                <div class="hero-actions">
+                    <a href="#resources" class="btn btn-primary">Explore Resources</a>
+                    <a href="#tracker" class="btn btn-secondary">Track Your Mood</a>
+                </div>
+            </div>
+        </div>
+        
+        <img src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Peaceful nature" class="hero-image">
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How MindMate Helps You</h2>
+            
+            <div class="features-grid">
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="feature-title">Personalized Resources</h3>
+                    <p>Content curated based on your current mood and preferences to provide the most relevant support.</p>
+                </div>
                 
-                items.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'resource-card';
-                    card.innerHTML = `
-                        <i class="fas ${item.icon} resource-icon"></i>
-                        <h3 class="resource-title">${item.title}</h3>
-                        <p class="resource-desc">${item.desc}</p>
-                        <button class="category-btn">Explore</button>
-                    `;
-                    grid.appendChild(card);
-                });
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Mood Tracking</h3>
+                    <p>Visualize your emotional patterns over time and identify triggers or improvements.</p>
+                </div>
+                
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="feature-title">Guided Journaling</h3>
+                    <p>Structured prompts to help you process emotions and reflect on your experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Resources Section -->
+    <section class="section" id="resources">
+        <div class="container">
+            <h2 class="section-title">Curated Wellness Resources</h2>
+            
+            <div class="resources-tabs">
+                <button class="tab-btn active" data-category="all">All</button>
+                <button class="tab-btn" data-category="meditation">Meditation</button>
+                <button class="tab-btn" data-category="music">Music</button>
+                <button class="tab-btn" data-category="reading">Reading</button>
+                <button class="tab-btn" data-category="videos">Videos</button>
+                <button class="tab-btn" data-category="activities">Activities</button>
+            </div>
+            
+            <div class="resources-grid">
+                <!-- Resources will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Mood Tracker -->
+    <section class="section" id="tracker">
+        <div class="container">
+            <div class="mood-tracker card">
+                <h2 class="mood-tracker-title">How are you feeling today?</h2>
+                <p class="mood-tracker-text">Tracking your mood helps identify patterns and provides better recommendations.</p>
+                
+                <div class="mood-options">
+                    <div class="mood-option">😢</div>
+                    <div class="mood-option">😞</div>
+                    <div class="mood-option">😐</div>
+                    <div class="mood-option">🙂</div>
+                    <div class="mood-option">😊</div>
+                    <div class="mood-option">😄</div>
+                </div>
+                
+                <button class="btn btn-primary">Save Mood Entry</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Journal Section -->
+    <section class="section" id="journal">
+        <div class="container">
+            <h2 class="section-title">Daily Reflection</h2>
+            
+            <div class="journal-container">
+                <div class="journal-prompt">
+                    <h3 class="prompt-title">Today's Journal Prompt</h3>
+                    <p class="prompt-text">What are three things you're grateful for today, and why do they matter to you?</p>
+                    <p class="prompt-text">How did you practice self-care today, even in small ways?</p>
+                    <p class="prompt-text">What's one challenge you faced, and how did you handle it?</p>
+                </div>
+                
+                <div class="journal-entry">
+                    <textarea class="journal-textarea" placeholder="Write your thoughts here..."></textarea>
+                    <button class="btn btn-primary">Save Journal Entry</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About MindMate</h2>
+            <p>MindMate was created to provide accessible mental health support through carefully curated resources and tools. Our mission is to help you navigate your emotional landscape with compassion and understanding.</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="footer-logo">MindMate</a>
+                    <p>Your companion for mental wellness and self-care.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Meditation</a></li>
+                        <li class="footer-link"><a href="#">Music</a></li>
+                        <li class="footer-link"><a href="#">Reading</a></li>
+                        <li class="footer-link"><a href="#">Videos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Help Center</a></li>
+                        <li class="footer-link"><a href="#">Contact Us</a></li>
+                        <li class="footer-link"><a href="#">Privacy Policy</a></li>
+                        <li class="footer-link"><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // ========== Resource Data ==========
+        const resourcesData = [
+            {
+                id: 1,
+                title: "Guided Meditation for Anxiety",
+                description: "A 10-minute meditation to help calm your mind and reduce anxiety symptoms.",
+                category: "meditation",
+                duration: "10 min",
+                image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=O-6f5wQXSu8"
+            },
+            {
+                id: 2,
+                title: "Calming Piano Music",
+                description: "Soothing piano compositions to help you relax and focus.",
+                category: "music",
+                duration: "1 hr",
+                image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=Ej0Lfu_k6wE"
+            },
+            {
+                id: 3,
+                title: "The Power of Now - Book Summary",
+                description: "Key insights from Eckhart Tolle's transformative book about present moment awareness.",
+                category: "reading",
+                duration: "15 min",
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.goodreads.com/book/show/6708.The_Power_of_Now"
+            },
+            {
+                id: 4,
+                title: "Nature Sounds for Sleep",
+                description: "Gentle rain and thunder sounds to help you fall asleep faster.",
+                category: "music",
+                duration: "8 hr",
+                image: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=rF0VkGZvUw8"
+            },
+            {
+                id: 5,
+                title: "5-Minute Breathing Exercise",
+                description: "Quick breathing technique to reduce stress anytime, anywhere.",
+                category: "meditation",
+                duration: "5 min",
+                image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=tEmt1Znux58"
+            },
+            {
+                id: 6,
+                title: "The Science of Happiness",
+                description: "TED Talk exploring research-backed ways to increase happiness.",
+                category: "videos",
+                duration: "12 min",
+                image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.ted.com/talks/shawn_achor_the_happy_secret_to_better_work"
+            },
+            {
+                id: 7,
+                title: "Gratitude Journaling Guide",
+                description: "Step-by-step instructions for starting a gratitude practice.",
+                category: "activities",
+                duration: "7 min",
+                image: "https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://positivepsychology.com/gratitude-journal/"
+            },
+            {
+                id: 8,
+                title: "Yoga for Stress Relief",
+                description: "Gentle yoga sequence to release tension and calm the mind.",
+                category: "activities",
+                duration: "20 min",
+                image: "https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=v7AYKMP6rOE"
+            },
+            {
+                id: 9,
+                title: "Binaural Beats for Focus",
+                description: "Scientifically designed audio to enhance concentration.",
+                category: "music",
+                duration: "30 min",
+                image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.youtube.com/watch?v=Zyxg7HqJDC8"
+            },
+            {
+                id: 10,
+                title: "Digital Detox Challenge",
+                description: "7-day plan to reduce screen time and improve mental wellbeing.",
+                category: "activities",
+                duration: "7 days",
+                image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.psychologytoday.com/us/blog/mental-wealth/201807/digital-detox-10-ways-unplug"
+            },
+            {
+                id: 11,
+                title: "Mindfulness for Beginners",
+                description: "Simple techniques to bring mindfulness into your daily life.",
+                category: "meditation",
+                duration: "8 min",
+                image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.mindful.org/meditation/mindfulness-getting-started/"
+            },
+            {
+                id: 12,
+                title: "The Happiness Hypothesis",
+                description: "Book exploring ancient wisdom and modern psychology of happiness.",
+                category: "reading",
+                duration: "6 hr",
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                link: "https://www.goodreads.com/book/show/96884.The_Happiness_Hypothesis"
+            }
+        ];
+
+        // ========== DOM Elements ==========
+        const body = document.body;
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav');
+        const moodBtns = document.querySelectorAll('.mood-btn');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const resourcesGrid = document.querySelector('.resources-grid');
+        const moodOptions = document.querySelectorAll('.mood-option');
+        const saveMoodBtn = document.querySelector('.mood-tracker .btn');
+        const saveJournalBtn = document.querySelector('.journal-entry .btn');
+        const journalTextarea = document.querySelector('.journal-textarea');
+
+        // ========== Functions ==========
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            nav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = nav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        }
+
+        // Change theme
+        function changeTheme(theme) {
+            body.className = `theme-${theme}`;
+            
+            // Update active mood button
+            moodBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Filter resources by category
+        function filterResources(category) {
+            // Update active tab
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter resources
+            const filteredResources = category === 'all' ? 
+                resourcesData : 
+                resourcesData.filter(resource => resource.category === category);
+            
+            // Display resources
+            displayResources(filteredResources);
+        }
+
+        // Display resources
+        function displayResources(resources) {
+            resourcesGrid.innerHTML = '';
+            
+            resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card card';
+                resourceCard.innerHTML = `
+                    <img src="${resource.image}" alt="${resource.title}" class="resource-img">
+                    <div class="resource-content">
+                        <span class="resource-category">${resource.category}</span>
+                        <h3 class="resource-title">${resource.title}</h3>
+                        <p class="resource-desc">${resource.description}</p>
+                        <div class="resource-footer">
+                            <span class="resource-duration">${resource.duration}</span>
+                            <a href="${resource.link}" target="_blank" class="btn btn-primary">Explore</a>
+                        </div>
+                    </div>
+                `;
+                resourcesGrid.appendChild(resourceCard);
+            });
+        }
+
+        // Track mood
+        function trackMood(option) {
+            moodOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+        }
+
+        // Save mood entry
+        function saveMoodEntry() {
+            const selectedMood = document.querySelector('.mood-option.active');
+            if (selectedMood) {
+                alert(`Your mood (${selectedMood.textContent}) has been recorded. Thank you for checking in!`);
+                // In a real app, you would save this to a database
+            } else {
+                alert('Please select a mood first.');
             }
         }
 
-        // Category filtering
-        document.querySelectorAll('.category-btn').forEach(btn => {
+        // Save journal entry
+        function saveJournalEntry() {
+            const entry = journalTextarea.value.trim();
+            if (entry) {
+                alert('Your journal entry has been saved.');
+                journalTextarea.value = '';
+                // In a real app, you would save this to a database
+            } else {
+                alert('Please write something first.');
+            }
+        }
+
+        // ========== Event Listeners ==========
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Mood theme selection
+        moodBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                populateResources(btn.dataset.category);
+                changeTheme(btn.dataset.theme);
             });
         });
 
-        // Dynamic theme based on mood (simulated)
-        const moods = ['calm', 'energetic', 'neutral'];
-        let currentMood = 0;
-        
-        function updateTheme() {
-    document.body.classList.remove(`theme-${moods[currentMood]}`);
-    currentMood = (currentMood + 1) % moods.length;
-    document.body.classList.add(`theme-${moods[currentMood]}`);
-    
-    document.getElementById('moodIndicator').style.backgroundColor = 
-        getComputedStyle(document.documentElement).getPropertyValue('--primary');
-}
+        // Resource category filtering
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterResources(btn.dataset.category);
+            });
+        });
 
+        // Mood tracking
+        moodOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                trackMood(option);
+            });
+        });
 
-        // Initial setup
-        populateResources();
-        updateTheme();
-        setInterval(updateTheme, 5000);
+        // Save mood entry
+        saveMoodBtn.addEventListener('click', saveMoodEntry);
 
-        // Responsive adjustments
-        window.addEventListener('resize', () => {
-            if(window.innerWidth < 768) {
-                document.querySelector('.category-selector').style.flexDirection = 'column';
+        // Save journal entry
+        saveJournalBtn.addEventListener('click', saveJournalEntry);
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.querySelector('.header').classList.add('scrolled');
             } else {
-                document.querySelector('.category-selector').style.flexDirection = 'row';
+                document.querySelector('.header').classList.remove('scrolled');
             }
         });
+
+        // ========== Initialization ==========
+        // Display all resources on page load
+        displayResources(resourcesData);
+
+        // Set first mood option as active by default
+        if (moodOptions.length > 0) {
+            moodOptions[3].classList.add('active'); // Default to "🙂"
+        }
     </script>
 </body>
 </html>
