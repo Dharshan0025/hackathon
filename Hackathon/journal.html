@@ -19,7 +19,7 @@
             --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
         }
-
+ 
         [data-theme="dark"] {
             --primary-color: #a29bfe;
             --secondary-color: #6c5ce7;
@@ -30,39 +30,39 @@
             --bg-color: #1e272e;
             --card-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-
+ 
         [data-mood="happy"] {
             --primary-color: #00cec9;
             --accent-color: #55efc4;
         }
-
+ 
         [data-mood="sad"] {
             --primary-color: #0984e3;
             --accent-color: #74b9ff;
         }
-
+ 
         [data-mood="angry"] {
             --primary-color: #d63031;
             --accent-color: #ff7675;
         }
-
+ 
         [data-mood="anxious"] {
             --primary-color: #fdcb6e;
             --accent-color: #ffeaa7;
         }
-
+ 
         [data-mood="neutral"] {
             --primary-color: #636e72;
             --accent-color: #b2bec3;
         }
-
+ 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+ 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -71,7 +71,7 @@
             display: flex;
             flex-direction: column;
         }
-
+ 
         header {
             background-color: var(--primary-color);
             color: white;
@@ -83,7 +83,7 @@
             position: relative;
             z-index: 10;
         }
-
+ 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
@@ -91,16 +91,16 @@
             align-items: center;
             gap: 0.5rem;
         }
-
+ 
         .logo i {
             font-size: 1.8rem;
         }
-
+ 
         .nav-buttons {
             display: flex;
             gap: 1rem;
         }
-
+ 
         .btn {
             padding: 0.5rem 1rem;
             border: none;
@@ -114,22 +114,22 @@
             gap: 0.5rem;
             font-weight: 600;
         }
-
+ 
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
+ 
         .btn-outline {
             background-color: transparent;
             border: 2px solid white;
         }
-
+ 
         .btn-sm {
             padding: 0.3rem 0.8rem;
             font-size: 0.9rem;
         }
-
+ 
         .container {
             flex: 1;
             padding: 2rem;
@@ -137,19 +137,19 @@
             margin: 0 auto;
             width: 100%;
         }
-
+ 
         .journal-container {
             display: grid;
             grid-template-columns: 1fr;
             gap: 2rem;
         }
-
+ 
         @media (min-width: 992px) {
             .journal-container {
                 grid-template-columns: 1fr 1fr;
             }
         }
-
+ 
         .journal-card {
             background-color: var(--light-color);
             border-radius: 15px;
@@ -158,25 +158,25 @@
             transition: var(--transition);
             height: 100%;
         }
-
+ 
         .journal-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-
+ 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-
+ 
         .card-title {
             font-size: 1.5rem;
             font-weight: 600;
             color: var(--primary-color);
         }
-
+ 
         .mood-indicator {
             display: flex;
             align-items: center;
@@ -187,14 +187,14 @@
             font-size: 0.9rem;
             font-weight: 600;
         }
-
+ 
         .mood-circle {
             width: 12px;
             height: 12px;
             border-radius: 50%;
             background-color: var(--accent-color);
         }
-
+ 
         .journal-entry {
             width: 100%;
             min-height: 300px;
@@ -207,15 +207,15 @@
             padding: 0.5rem;
             outline: none;
         }
-
+ 
         .journal-entry::placeholder {
             color: rgba(45, 52, 54, 0.5);
         }
-
+ 
         [data-theme="dark"] .journal-entry::placeholder {
             color: rgba(248, 249, 250, 0.5);
         }
-
+ 
         .entry-actions {
             display: flex;
             justify-content: space-between;
@@ -223,19 +223,19 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
+ 
         .action-group {
             display: flex;
             gap: 1rem;
         }
-
+ 
         .voice-recording {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-top: 1rem;
         }
-
+ 
         .voice-visualizer {
             flex: 1;
             height: 30px;
@@ -244,7 +244,7 @@
             overflow: hidden;
             position: relative;
         }
-
+ 
         .voice-bars {
             position: absolute;
             top: 0;
@@ -256,33 +256,33 @@
             gap: 2px;
             padding: 0 5px;
         }
-
+ 
         .voice-bar {
             flex: 1;
             background-color: var(--primary-color);
             border-radius: 2px;
             transition: height 0.1s ease;
         }
-
+ 
         .suggestions-card {
             position: relative;
             overflow: hidden;
         }
-
+ 
         .suggestions-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
-
+ 
         .suggestions-tabs {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
-
+ 
         .tab {
             padding: 0.5rem 1rem;
             border-radius: 50px;
@@ -292,12 +292,12 @@
             font-weight: 600;
             transition: var(--transition);
         }
-
+ 
         .tab.active {
             background-color: var(--primary-color);
             color: white;
         }
-
+ 
         .suggestion-item {
             display: flex;
             align-items: center;
@@ -309,12 +309,12 @@
             transition: var(--transition);
             cursor: pointer;
         }
-
+ 
         .suggestion-item:hover {
             background-color: rgba(0,0,0,0.07);
             transform: translateX(5px);
         }
-
+ 
         .suggestion-icon {
             width: 40px;
             height: 40px;
@@ -326,24 +326,24 @@
             justify-content: center;
             font-size: 1.2rem;
         }
-
+ 
         .suggestion-content h4 {
             margin-bottom: 0.3rem;
             color: var(--primary-color);
         }
-
+ 
         .suggestion-content p {
             font-size: 0.9rem;
             opacity: 0.8;
         }
-
+ 
         .mood-selector {
             display: flex;
             gap: 0.5rem;
             margin-top: 1rem;
             flex-wrap: wrap;
         }
-
+ 
         .mood-option {
             padding: 0.5rem 1rem;
             border-radius: 50px;
@@ -355,16 +355,16 @@
             gap: 0.5rem;
             transition: var(--transition);
         }
-
+ 
         .mood-option.active {
             background-color: var(--primary-color);
             color: white;
         }
-
+ 
         .mood-option i {
             font-size: 1rem;
         }
-
+ 
         .floating-action {
             position: fixed;
             bottom: 2rem;
@@ -383,11 +383,11 @@
             z-index: 100;
             transition: var(--transition);
         }
-
+ 
         .floating-action:hover {
             transform: scale(1.1);
         }
-
+ 
         .ai-analysis {
             margin-top: 2rem;
             padding: 1.5rem;
@@ -395,7 +395,7 @@
             background-color: rgba(108, 92, 231, 0.1);
             border-left: 5px solid var(--primary-color);
         }
-
+ 
         .ai-analysis h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
@@ -403,46 +403,46 @@
             align-items: center;
             gap: 0.5rem;
         }
-
+ 
         .ai-analysis p {
             line-height: 1.6;
         }
-
+ 
         .hidden {
             display: none;
         }
-
+ 
         /* Animation */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
+ 
         .pulse {
             animation: pulse 2s infinite;
         }
-
+ 
         /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
-            
+ 
             .journal-card {
                 padding: 1.5rem;
             }
-            
+ 
             .nav-buttons {
                 gap: 0.5rem;
             }
-            
+ 
             .btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.9rem;
             }
         }
-
+ 
         /* Icons */
         .icon {
             font-size: 1.2rem;
@@ -468,7 +468,7 @@
             </button>
         </div>
     </header>
-
+ 
     <div class="container">
         <div class="journal-container">
             <div class="journal-card">
@@ -479,7 +479,7 @@
                         <span id="currentMood">Neutral</span>
                     </div>
                 </div>
-                
+ 
                 <div class="mood-selector">
                     <div class="mood-option" data-mood="happy">
                         <i class="fas fa-smile"></i> Happy
@@ -497,9 +497,9 @@
                         <i class="fas fa-meh"></i> Neutral
                     </div>
                 </div>
-                
+ 
                 <textarea class="journal-entry" placeholder="How are you feeling today? Write freely, this is your safe space..."></textarea>
-                
+ 
                 <div class="voice-recording hidden" id="voiceContainer">
                     <div class="voice-visualizer">
                         <div class="voice-bars" id="voiceBars"></div>
@@ -508,7 +508,7 @@
                         <i class="fas fa-stop"></i> Stop
                     </button>
                 </div>
-                
+ 
                 <div class="entry-actions">
                     <div class="action-group">
                         <button class="btn btn-sm" id="voiceEntry">
@@ -522,19 +522,19 @@
                         <i class="fas fa-save"></i> Save Entry
                     </button>
                 </div>
-                
+ 
                 <div class="ai-analysis hidden" id="aiAnalysis">
                     <h3><i class="fas fa-robot"></i> Mind Mate Analysis</h3>
                     <p id="analysisText">Your journal entry will be analyzed here for emotional patterns and suggestions.</p>
                 </div>
             </div>
-            
+ 
             <div class="journal-card suggestions-card">
                 <div class="suggestions-header">
                     <h2 class="card-title">Suggestions For You</h2>
                     <i class="fas fa-sync-alt icon" id="refreshSuggestions"></i>
                 </div>
-                
+ 
                 <div class="suggestions-tabs">
                     <div class="tab active" data-category="all">All</div>
                     <div class="tab" data-category="movies">Movies</div>
@@ -542,7 +542,7 @@
                     <div class="tab" data-category="books">Books</div>
                     <div class="tab" data-category="activities">Activities</div>
                 </div>
-                
+ 
                 <div class="suggestions-list">
                     <div class="suggestion-item" data-category="movies">
                         <div class="suggestion-icon">
@@ -553,7 +553,7 @@
                             <p>A beautiful film about self-discovery and adventure</p>
                         </div>
                     </div>
-                    
+ 
                     <div class="suggestion-item" data-category="music">
                         <div class="suggestion-icon">
                             <i class="fas fa-music"></i>
@@ -563,7 +563,7 @@
                             <p>Scientifically proven to reduce anxiety by 65%</p>
                         </div>
                     </div>
-                    
+ 
                     <div class="suggestion-item" data-category="books">
                         <div class="suggestion-icon">
                             <i class="fas fa-book"></i>
@@ -573,7 +573,7 @@
                             <p>Learn to observe your thoughts without judgment</p>
                         </div>
                     </div>
-                    
+ 
                     <div class="suggestion-item" data-category="activities">
                         <div class="suggestion-icon">
                             <i class="fas fa-spa"></i>
@@ -583,7 +583,7 @@
                             <p>Notice 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste</p>
                         </div>
                     </div>
-                    
+ 
                     <div class="suggestion-item" data-category="activities">
                         <div class="suggestion-icon">
                             <i class="fas fa-hands"></i>
@@ -597,11 +597,11 @@
             </div>
         </div>
     </div>
-    
+ 
     <div class="floating-action pulse" id="emergencyBtn">
         <i class="fas fa-life-ring"></i>
     </div>
-
+ 
     <script>
         // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
@@ -623,7 +623,7 @@
         const emergencyBtn = document.getElementById('emergencyBtn');
         const mindMateBtn = document.getElementById('mindMateBtn');
         const profileBtn = document.getElementById('profileBtn');
-
+ 
         // Theme Toggle
         themeToggle.addEventListener('click', () => {
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -631,11 +631,11 @@
             themeToggle.innerHTML = isDark 
                 ? '<i class="fas fa-moon"></i>' 
                 : '<i class="fas fa-sun"></i>';
-            
+ 
             // Save preference to localStorage
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
-
+ 
         // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -644,7 +644,7 @@
                 ? '<i class="fas fa-sun"></i>' 
                 : '<i class="fas fa-moon"></i>';
         }
-
+ 
         // Auto dark mode after 8pm
         function checkTimeForDarkMode() {
             const hour = new Date().getHours();
@@ -654,26 +654,26 @@
             }
         }
         checkTimeForDarkMode();
-
+ 
         // Mood Selection
         moodOptions.forEach(option => {
             option.addEventListener('click', () => {
                 // Remove active class from all options
                 moodOptions.forEach(opt => opt.classList.remove('active'));
-                
+ 
                 // Add active class to clicked option
                 option.classList.add('active');
-                
+ 
                 // Update body data attribute and display
                 const mood = option.getAttribute('data-mood');
                 body.setAttribute('data-mood', mood);
                 currentMoodDisplay.textContent = mood.charAt(0).toUpperCase() + mood.slice(1);
-                
+ 
                 // Save mood to localStorage
                 localStorage.setItem('currentMood', mood);
             });
         });
-
+ 
         // Check for saved mood
         const savedMood = localStorage.getItem('currentMood');
         if (savedMood) {
@@ -681,12 +681,12 @@
             currentMoodDisplay.textContent = savedMood.charAt(0).toUpperCase() + savedMood.slice(1);
             document.querySelector(`.mood-option[data-mood="${savedMood}"]`).classList.add('active');
         }
-
+ 
         // Voice Recording Simulation
         voiceEntryBtn.addEventListener('click', () => {
             voiceEntryBtn.disabled = true;
             voiceContainer.classList.remove('hidden');
-            
+ 
             // Create voice visualization bars
             voiceBars.innerHTML = '';
             for (let i = 0; i < 20; i++) {
@@ -694,13 +694,13 @@
                 bar.className = 'voice-bar';
                 bar.style.height = `${Math.random() * 100}%`;
                 voiceBars.appendChild(bar);
-                
+ 
                 // Animate bars
                 setInterval(() => {
                     bar.style.height = `${Math.random() * 100}%`;
                 }, 100);
             }
-            
+ 
             // Simulate voice-to-text after 3 seconds
             setTimeout(() => {
                 const phrases = [
@@ -713,60 +713,76 @@
                 journalEntry.value = randomPhrase;
             }, 3000);
         });
-
+ 
         stopRecordingBtn.addEventListener('click', () => {
             voiceEntryBtn.disabled = false;
             voiceContainer.classList.add('hidden');
         });
-
+ 
         // Text Analysis
-        analyzeTextBtn.addEventListener('click', () => {
-            if (!journalEntry.value.trim()) {
-                alert('Please write something or record your voice first');
-                return;
-            }
-            
-            analyzeTextBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-            
-            // Simulate AI analysis
-            setTimeout(() => {
-                aiAnalysis.classList.remove('hidden');
-                
-                const mood = body.getAttribute('data-mood');
-                const text = journalEntry.value.toLowerCase();
-                let analysis = '';
-                
-                if (text.includes('anxious') || text.includes('stress') || text.includes('overwhelm')) {
-                    analysis = `I notice you're feeling ${mood} and mentioned anxiety or stress. This is completely normal. Try the 4-7-8 breathing technique: inhale for 4 seconds, hold for 7, exhale for 8. Research shows this can reduce anxiety by activating your parasympathetic nervous system.`;
-                } 
-                else if (text.includes('happy') || text.includes('good') || text.includes('great')) {
-                    analysis = `It's wonderful to hear you're feeling ${mood}! Savoring positive moments strengthens neural pathways associated with happiness. Consider journaling about what specifically made you feel good today to reinforce these positive emotions.`;
-                }
-                else if (text.includes('sad') || text.includes('depress') || text.includes('lonely')) {
-                    analysis = `I hear you're feeling ${mood}. Remember emotions are like waves - they come and go. You're not alone in this. Research shows that even brief social connections can elevate mood. Would you like me to suggest some supportive communities?`;
-                }
-                else if (text.includes('angry') || text.includes('mad') || text.includes('frustrat')) {
-                    analysis = `I sense ${mood} in your words. Anger often masks deeper feelings. Try the "STOP" technique: Stop, Take a breath, Observe your feelings, Proceed mindfully. Physical activity can also help metabolize stress hormones.`;
-                }
-                else {
-                    analysis = `Your journal entry shows you're feeling ${mood}. Regular journaling has been shown to reduce stress by 28% according to a Cambridge study. Keep exploring your thoughts and feelings - this process builds emotional resilience.`;
-                }
-                
-                analysisText.textContent = analysis;
-                analyzeTextBtn.innerHTML = '<i class="fas fa-magic"></i> Analyze';
-                
-                // Generate personalized suggestions based on mood and content
-                generateSuggestions(mood, text);
-            }, 2000);
-        });
-
+        // Text Analysis
+analyzeTextBtn.addEventListener('click', () => {
+    if (!journalEntry.value.trim()) {
+        alert('Please write something or record your voice first');
+        return;
+    }
+ 
+    analyzeTextBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+ 
+    // Get the text content
+    const text = journalEntry.value;
+ 
+    // Detect emotion from text
+    const detectedEmotion = detectEmotion(text);
+ 
+    // Update the UI to reflect detected emotion
+    body.setAttribute('data-mood', detectedEmotion);
+    currentMoodDisplay.textContent = detectedEmotion.charAt(0).toUpperCase() + detectedEmotion.slice(1);
+ 
+    // Update mood selection UI
+    moodOptions.forEach(opt => opt.classList.remove('active'));
+    document.querySelector(`.mood-option[data-mood="${detectedEmotion}"]`).classList.add('active');
+ 
+    // Simulate AI analysis
+    setTimeout(() => {
+        aiAnalysis.classList.remove('hidden');
+ 
+        let analysis = '';
+ 
+        if (detectedEmotion === 'anxious') {
+            analysis = `I detected anxiety in your entry. This is completely normal. Try the 4-7-8 breathing technique: inhale for 4 seconds, hold for 7, exhale for 8. Research shows this can reduce anxiety by activating your parasympathetic nervous system.`;
+        } 
+        else if (detectedEmotion === 'happy') {
+            analysis = `I can see you're feeling happy! Savoring positive moments strengthens neural pathways associated with happiness. Consider journaling about what specifically made you feel good today to reinforce these positive emotions.`;
+        }
+        else if (detectedEmotion === 'sad') {
+            analysis = `I hear that you're feeling sad. Remember emotions are like waves - they come and go. You're not alone in this. Research shows that even brief social connections can elevate mood. Would you like me to suggest some supportive communities?`;
+        }
+        else if (detectedEmotion === 'angry') {
+            analysis = `I sense anger in your words. Anger often masks deeper feelings. Try the "STOP" technique: Stop, Take a breath, Observe your feelings, Proceed mindfully. Physical activity can also help metabolize stress hormones.`;
+        }
+        else {
+            analysis = `Your journal entry has a neutral emotional tone. Regular journaling has been shown to reduce stress by 28% according to a Cambridge study. Keep exploring your thoughts and feelings - this process builds emotional resilience.`;
+        }
+ 
+        analysisText.textContent = analysis;
+        analyzeTextBtn.innerHTML = '<i class="fas fa-magic"></i> Analyze';
+ 
+        // Generate personalized suggestions based on detected emotion
+        generateSuggestions(detectedEmotion, text);
+ 
+        // Save the detected mood to localStorage
+        localStorage.setItem('currentMood', detectedEmotion);
+    }, 2000);
+});
+ 
         // Generate personalized suggestions
         function generateSuggestions(mood, text) {
             // In a real app, this would come from an API
             // Here we simulate based on mood and keywords
-            
+ 
             let suggestions = [];
-            
+ 
             if (mood === 'anxious' || text.includes('stress') || text.includes('anxious')) {
                 suggestions = [
                     {
@@ -878,16 +894,16 @@
                     }
                 ];
             }
-            
+ 
             // Update suggestions in UI
             const suggestionsList = document.querySelector('.suggestions-list');
             suggestionsList.innerHTML = '';
-            
+ 
             suggestions.forEach(suggestion => {
                 const item = document.createElement('div');
                 item.className = 'suggestion-item';
                 item.setAttribute('data-category', suggestion.category);
-                
+ 
                 item.innerHTML = `
                     <div class="suggestion-icon">
                         <i class="fas fa-${suggestion.icon}"></i>
@@ -897,17 +913,17 @@
                         <p>${suggestion.description}</p>
                     </div>
                 `;
-                
+ 
                 suggestionsList.appendChild(item);
             });
         }
-
+ 
         // Tab filtering
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
+ 
                 const category = tab.getAttribute('data-category');
                 suggestionItems.forEach(item => {
                     if (category === 'all' || item.getAttribute('data-category') === category) {
@@ -918,7 +934,7 @@
                 });
             });
         });
-
+ 
         // Refresh suggestions
         refreshSuggestions.addEventListener('click', () => {
             refreshSuggestions.classList.add('fa-spin');
@@ -927,41 +943,41 @@
                 generateSuggestions(body.getAttribute('data-mood'), journalEntry.value);
             }, 1000);
         });
-
+ 
         // Save entry
         saveEntryBtn.addEventListener('click', () => {
             if (!journalEntry.value.trim()) {
                 alert('Please write something before saving');
                 return;
             }
-            
+ 
             saveEntryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            
+ 
             // Simulate saving to database
             setTimeout(() => {
                 saveEntryBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
-                
+ 
                 // Reset after 2 seconds
                 setTimeout(() => {
                     saveEntryBtn.innerHTML = '<i class="fas fa-save"></i> Save Entry';
                 }, 2000);
             }, 1500);
         });
-
+ 
         // Emergency button
         emergencyBtn.addEventListener('click', () => {
             window.location.href = 'emergency.html';
         });
-
+ 
         // Navigation buttons
         mindMateBtn.addEventListener('click', () => {
             window.location.href = 'mindmate.html';
         });
-
+ 
         profileBtn.addEventListener('click', () => {
             window.location.href = 'profile.html';
         });
-
+ 
         // Initialize voice bars for demo
         for (let i = 0; i < 20; i++) {
             const bar = document.createElement('div');
@@ -969,6 +985,58 @@
             bar.style.height = `${Math.random() * 30 + 10}%`;
             voiceBars.appendChild(bar);
         }
+    // Add this function to your script
+function detectEmotion(text) {
+    text = text.toLowerCase();
+ 
+    // Define emotion keywords
+    const emotionKeywords = {
+        happy: ['happy', 'joy', 'excited', 'pleased', 'delighted', 'glad', 'content', 'cheerful', 'thrilled', 'wonderful', 'amazing', 'great', 'good', 'positive', 'love', 'awesome', 'fantastic'],
+        sad: ['sad', 'unhappy', 'depressed', 'down', 'blue', 'gloomy', 'miserable', 'heartbroken', 'disappointed', 'upset', 'hurt', 'sorrow', 'grief', 'cry', 'tears', 'lonely', 'alone'],
+        angry: ['angry', 'mad', 'furious', 'annoyed', 'irritated', 'frustrated', 'enraged', 'outraged', 'hate', 'bitter', 'resent', 'hostile', 'rage', 'temper', 'upset', 'agitated'],
+        anxious: ['anxious', 'worried', 'nervous', 'stressed', 'tense', 'uneasy', 'restless', 'afraid', 'scared', 'panicked', 'fearful', 'overwhelmed', 'concern', 'dread', 'panic', 'trouble', 'apprehensive'],
+        neutral: ['ok', 'fine', 'alright', 'neutral', 'average', 'normal', 'moderate', 'balanced', 'standard', 'regular', 'typical']
+    };
+ 
+    // Count emotion keywords
+    const emotionCounts = {
+        happy: 0,
+        sad: 0,
+        angry: 0,
+        anxious: 0,
+        neutral: 0
+    };
+ 
+    // Check for each emotion's keywords
+    for (const emotion in emotionKeywords) {
+        emotionKeywords[emotion].forEach(keyword => {
+            // Use word boundaries to ensure we're matching whole words
+            const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+            const matches = text.match(regex);
+            if (matches) {
+                emotionCounts[emotion] += matches.length;
+            }
+        });
+    }
+ 
+    // Find the dominant emotion
+    let dominantEmotion = 'neutral';
+    let maxCount = 0;
+ 
+    for (const emotion in emotionCounts) {
+        if (emotionCounts[emotion] > maxCount) {
+            maxCount = emotionCounts[emotion];
+            dominantEmotion = emotion;
+        }
+    }
+ 
+    // If no emotion is clearly detected, default to neutral
+    if (maxCount === 0) {
+        return 'neutral';
+    }
+ 
+    return dominantEmotion;
+}
     </script>
 </body>
 </html>
