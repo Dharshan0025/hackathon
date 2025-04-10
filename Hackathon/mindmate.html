@@ -6,6 +6,7 @@
     <title>MindMate - Your AI Companion</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         :root {
             --primary-color: #5d5fef;
@@ -21,13 +22,13 @@
             --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-
+ 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+ 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f5f7ff;
@@ -36,18 +37,18 @@
             overflow-x: hidden;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode {
             background-color: #121212;
             color: #f0f0f0;
         }
-
+ 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-
+ 
         header {
             display: flex;
             justify-content: space-between;
@@ -56,22 +57,22 @@
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-
+ 
         body.dark-mode header {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
+ 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+ 
         .logo img {
             width: 40px;
             height: 40px;
         }
-
+ 
         .logo h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
@@ -81,13 +82,13 @@
             background-clip: text;
             color: transparent;
         }
-
+ 
         .user-actions {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
+ 
         .theme-toggle {
             background: none;
             border: none;
@@ -96,11 +97,11 @@
             color: var(--dark-color);
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .theme-toggle {
             color: #f0f0f0;
         }
-
+ 
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -109,13 +110,13 @@
             cursor: pointer;
             border: 2px solid var(--primary-color);
         }
-
+ 
         .chat-container {
             display: flex;
             height: calc(100vh - 150px);
             gap: 20px;
         }
-
+ 
         .chat-sidebar {
             width: 300px;
             background-color: white;
@@ -125,11 +126,11 @@
             overflow-y: auto;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .chat-sidebar {
             background-color: #1e1e1e;
         }
-
+ 
         .chat-main {
             flex: 1;
             display: flex;
@@ -140,11 +141,11 @@
             overflow: hidden;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .chat-main {
             background-color: #1e1e1e;
         }
-
+ 
         .chat-header {
             padding: 15px 20px;
             background-color: var(--primary-color);
@@ -153,11 +154,11 @@
             align-items: center;
             justify-content: space-between;
         }
-
+ 
         .chat-header h2 {
             font-weight: 500;
         }
-
+ 
         .chat-mood {
             display: flex;
             align-items: center;
@@ -167,7 +168,7 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
-
+ 
         .chat-messages {
             flex: 1;
             padding: 20px;
@@ -176,7 +177,7 @@
             flex-direction: column;
             gap: 15px;
         }
-
+ 
         .message {
             max-width: 70%;
             padding: 12px 16px;
@@ -184,38 +185,38 @@
             position: relative;
             animation: fadeIn 0.3s ease;
         }
-
+ 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+ 
         .message-user {
             align-self: flex-end;
             background-color: var(--primary-color);
             color: white;
             border-bottom-right-radius: 5px;
         }
-
+ 
         .message-ai {
             align-self: flex-start;
             background-color: #f0f0f0;
             color: var(--dark-color);
             border-bottom-left-radius: 5px;
         }
-
+ 
         body.dark-mode .message-ai {
             background-color: #2d2d2d;
             color: #f0f0f0;
         }
-
+ 
         .message-time {
             font-size: 0.7rem;
             opacity: 0.7;
             margin-top: 5px;
             text-align: right;
         }
-
+ 
         .message-avatar {
             width: 30px;
             height: 30px;
@@ -223,7 +224,7 @@
             object-fit: cover;
             margin-right: 10px;
         }
-
+ 
         .chat-input-container {
             padding: 15px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -231,12 +232,12 @@
             display: flex;
             gap: 10px;
         }
-
+ 
         body.dark-mode .chat-input-container {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             background-color: #1e1e1e;
         }
-
+ 
         .chat-input {
             flex: 1;
             padding: 12px 15px;
@@ -247,18 +248,18 @@
             outline: none;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .chat-input {
             background-color: #2d2d2d;
             border-color: rgba(255, 255, 255, 0.1);
             color: #f0f0f0;
         }
-
+ 
         .chat-input:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(93, 95, 239, 0.2);
         }
-
+ 
         .send-btn, .mic-btn {
             width: 45px;
             height: 45px;
@@ -272,42 +273,42 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
+ 
         .send-btn:hover, .mic-btn:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
         }
-
+ 
         .send-btn:active, .mic-btn:active {
             transform: translateY(0);
         }
-
+ 
         .mic-btn.listening {
             animation: pulse 1.5s infinite;
             background-color: var(--danger-color);
         }
-
+ 
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
             100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
         }
-
+ 
         .role-selector {
             margin-bottom: 20px;
         }
-
+ 
         .role-selector h3 {
             margin-bottom: 10px;
             font-weight: 500;
         }
-
+ 
         .role-options {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-
+ 
         .role-option {
             padding: 12px 15px;
             border-radius: var(--border-radius);
@@ -318,43 +319,43 @@
             align-items: center;
             gap: 10px;
         }
-
+ 
         body.dark-mode .role-option {
             background-color: #2d2d2d;
         }
-
+ 
         .role-option:hover {
             background-color: #e0e0e0;
         }
-
+ 
         body.dark-mode .role-option:hover {
             background-color: #3d3d3d;
         }
-
+ 
         .role-option.active {
             background-color: var(--primary-color);
             color: white;
         }
-
+ 
         .role-option i {
             font-size: 1.2rem;
         }
-
+ 
         .quick-actions {
             margin-top: 20px;
         }
-
+ 
         .quick-actions h3 {
             margin-bottom: 10px;
             font-weight: 500;
         }
-
+ 
         .quick-action-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-
+ 
         .quick-action-btn {
             padding: 8px 12px;
             background-color: #f0f0f0;
@@ -364,35 +365,35 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .quick-action-btn {
             background-color: #2d2d2d;
         }
-
+ 
         .quick-action-btn:hover {
-            background-color: #e0e0e0;
+            background-color: #e0e0f0;
         }
-
+ 
         body.dark-mode .quick-action-btn:hover {
             background-color: #3d3d3d;
         }
-
+ 
         .mood-tracker {
             margin-top: 20px;
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: var(--border-radius);
         }
-
+ 
         body.dark-mode .mood-tracker {
             background-color: #2d2d2d;
         }
-
+ 
         .mood-tracker h3 {
             margin-bottom: 10px;
             font-weight: 500;
         }
-
+ 
         .mood-indicator {
             height: 10px;
             background: linear-gradient(to right, #ff5e62, #ff9966, #ffcc33, #33cc33);
@@ -400,7 +401,7 @@
             margin-bottom: 10px;
             position: relative;
         }
-
+ 
         .mood-pointer {
             position: absolute;
             top: -5px;
@@ -411,18 +412,18 @@
             border: 3px solid var(--primary-color);
             transform: translateX(-50%);
         }
-
+ 
         .mood-labels {
             display: flex;
             justify-content: space-between;
             font-size: 0.7rem;
             color: #666;
         }
-
+ 
         body.dark-mode .mood-labels {
             color: #aaa;
         }
-
+ 
         .suggestions-dropdown {
             position: absolute;
             bottom: 70px;
@@ -437,25 +438,25 @@
             display: none;
             z-index: 10;
         }
-
+ 
         body.dark-mode .suggestions-dropdown {
             background-color: #2d2d2d;
         }
-
+ 
         .suggestion-item {
             padding: 8px 12px;
             cursor: pointer;
             border-radius: 5px;
         }
-
+ 
         .suggestion-item:hover {
             background-color: #f0f0f0;
         }
-
+ 
         body.dark-mode .suggestion-item:hover {
             background-color: #3d3d3d;
         }
-
+ 
         .typing-indicator {
             display: flex;
             align-items: center;
@@ -468,15 +469,15 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
+ 
         body.dark-mode .typing-indicator {
             background-color: #2d2d2d;
         }
-
+ 
         .typing-indicator.active {
             opacity: 1;
         }
-
+ 
         .typing-dot {
             width: 8px;
             height: 8px;
@@ -484,35 +485,35 @@
             border-radius: 50%;
             animation: typingAnimation 1.4s infinite ease-in-out;
         }
-
+ 
         body.dark-mode .typing-dot {
             background-color: #aaa;
         }
-
+ 
         .typing-dot:nth-child(1) {
             animation-delay: 0s;
         }
-
+ 
         .typing-dot:nth-child(2) {
             animation-delay: 0.2s;
         }
-
+ 
         .typing-dot:nth-child(3) {
             animation-delay: 0.4s;
         }
-
+ 
         @keyframes typingAnimation {
             0%, 60%, 100% { transform: translateY(0); }
             30% { transform: translateY(-5px); }
         }
-
+ 
         .avatar-animation {
             width: 100px;
             height: 100px;
             margin: 0 auto 20px;
             position: relative;
         }
-
+ 
         .avatar-face {
             width: 100%;
             height: 100%;
@@ -521,7 +522,7 @@
             position: relative;
             overflow: hidden;
         }
-
+ 
         .avatar-eyes {
             position: absolute;
             top: 35%;
@@ -530,7 +531,7 @@
             display: flex;
             gap: 20px;
         }
-
+ 
         .avatar-eye {
             width: 15px;
             height: 15px;
@@ -538,7 +539,7 @@
             border-radius: 50%;
             position: relative;
         }
-
+ 
         .avatar-eye::after {
             content: '';
             position: absolute;
@@ -549,7 +550,7 @@
             top: 3px;
             left: 3px;
         }
-
+ 
         .avatar-mouth {
             position: absolute;
             bottom: 25%;
@@ -562,18 +563,18 @@
             background-color: #ff6b6b;
             transition: all 0.3s ease;
         }
-
+ 
         .avatar-mouth.smile {
             height: 20px;
             border-radius: 50%;
         }
-
+ 
         .avatar-mouth.neutral {
             width: 30px;
             height: 5px;
             border-radius: 0;
         }
-
+ 
         .avatar-mouth.sad {
             height: 20px;
             border-top-left-radius: 20px;
@@ -581,7 +582,7 @@
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
         }
-
+ 
         .avatar-halo {
             position: absolute;
             top: -20px;
@@ -593,92 +594,92 @@
             animation: haloPulse 3s infinite ease-in-out;
             opacity: 0;
         }
-
+ 
         @keyframes haloPulse {
             0% { transform: scale(0.8); opacity: 0; }
             50% { transform: scale(1); opacity: 0.7; }
             100% { transform: scale(0.8); opacity: 0; }
         }
-
+ 
         .avatar-halo.active {
             animation: haloPulse 3s infinite ease-in-out;
         }
-
+ 
         /* Responsive styles */
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
                 height: auto;
             }
-
+ 
             .chat-sidebar {
                 width: 100%;
                 margin-bottom: 20px;
             }
-
+ 
             .chat-main {
                 height: 500px;
             }
         }
-
+ 
         @media (max-width: 480px) {
             .message {
                 max-width: 85%;
             }
-
+ 
             .logo h1 {
                 font-size: 1.2rem;
             }
-
+ 
             .chat-header h2 {
                 font-size: 1rem;
             }
-
+ 
             .chat-input-container {
                 padding: 10px;
             }
-
+ 
             .send-btn, .mic-btn {
                 width: 40px;
                 height: 40px;
             }
         }
-
+ 
         /* Special message styles */
         .message-suggestion {
             border-left: 4px solid var(--accent-color);
             background-color: rgba(255, 126, 95, 0.1);
         }
-
+ 
         body.dark-mode .message-suggestion {
             background-color: rgba(255, 126, 95, 0.2);
         }
-
+ 
         .message-legal {
             border-left: 4px solid var(--info-color);
             background-color: rgba(23, 162, 184, 0.1);
         }
-
+ 
         body.dark-mode .message-legal {
             background-color: rgba(23, 162, 184, 0.2);
         }
-
+ 
         .message-emergency {
             border-left: 4px solid var(--danger-color);
             background-color: rgba(220, 53, 69, 0.1);
             animation: emergencyPulse 2s infinite;
         }
-
+ 
         body.dark-mode .message-emergency {
             background-color: rgba(220, 53, 69, 0.2);
         }
-
+ 
         @keyframes emergencyPulse {
             0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
             100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
         }
-
+ 
         .suggestion-cards {
             display: flex;
             gap: 10px;
@@ -686,7 +687,7 @@
             padding: 10px 0;
             margin-top: 10px;
         }
-
+ 
         .suggestion-card {
             min-width: 150px;
             padding: 10px;
@@ -696,16 +697,16 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
+ 
         body.dark-mode .suggestion-card {
             background-color: #2d2d2d;
         }
-
+ 
         .suggestion-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .suggestion-card img {
             width: 100%;
             height: 100px;
@@ -713,7 +714,7 @@
             border-radius: 5px;
             margin-bottom: 5px;
         }
-
+ 
         .suggestion-card h4 {
             font-size: 0.9rem;
             margin-bottom: 5px;
@@ -721,45 +722,129 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
+ 
         .suggestion-card p {
             font-size: 0.7rem;
             color: #666;
         }
-
+ 
         body.dark-mode .suggestion-card p {
             color: #aaa;
         }
-
+ 
         /* Mood color themes */
         .theme-happy {
             --primary-color: #4CAF50;
             --secondary-color: #8BC34A;
             --accent-color: #FFC107;
         }
-
+ 
         .theme-calm {
             --primary-color: #2196F3;
             --secondary-color: #64B5F6;
             --accent-color: #4DD0E1;
         }
-
+ 
         .theme-sad {
             --primary-color: #9C27B0;
             --secondary-color: #BA68C8;
             --accent-color: #E91E63;
         }
-
+ 
         .theme-angry {
             --primary-color: #F44336;
             --secondary-color: #EF5350;
             --accent-color: #FF5722;
         }
-
+ 
         .theme-anxious {
             --primary-color: #673AB7;
             --secondary-color: #9575CD;
             --accent-color: #FF9800;
+        }
+ 
+        /* Loading indicator styles */
+        .loading-indicator {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-left: 10px;
+        }
+ 
+        .loading-bar {
+            width: 5px;
+            height: 15px;
+            background-color: var(--primary-color);
+            animation: loadingAnimation 1s infinite ease-in-out;
+        }
+ 
+        .loading-bar:nth-child(1) {
+            animation-delay: 0s;
+        }
+ 
+        .loading-bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+ 
+        .loading-bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+ 
+        @keyframes loadingAnimation {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.5); }
+        }
+ 
+        .message-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+ 
+        .message-content .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+ 
+        .message-content .text {
+            flex: 1;
+        }
+ 
+        .message.incoming {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            color: var(--dark-color);
+            border-bottom-left-radius: 5px;
+        }
+ 
+        body.dark-mode .message.incoming {
+            background-color: #2d2d2d;
+        }
+ 
+        .message.outgoing {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+ 
+        .message.error {
+            border-left: 4px solid var(--danger-color);
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+ 
+        body.dark-mode .message.error {
+            background-color: rgba(220, 53, 69, 0.2);
+        }
+ 
+        .message.loading .loading-indicator {
+            display: flex;
+        }
+ 
+        .hide-header {
+            display: none;
         }
     </style>
 </head>
@@ -774,10 +859,10 @@
                 <button class="theme-toggle" id="themeToggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar" id="deleteChatButton">
             </div>
         </header>
-
+ 
         <div class="chat-container">
             <div class="chat-sidebar">
                 <div class="avatar-animation">
@@ -790,39 +875,41 @@
                         <div class="avatar-mouth smile"></div>
                     </div>
                 </div>
-                
-                <div class="role-selector">
-                    <h3>Who would you like to talk with?</h3>
-                    <div class="role-options">
-                        <div class="role-option active" data-role="friend">
-                            <i class="fas fa-user-friends"></i>
-                            <span>Supportive Friend</span>
-                        </div>
-                        <div class="role-option" data-role="parent">
-                            <i class="fas fa-hands-helping"></i>
-                            <span>Caring Parent</span>
-                        </div>
-                        <div class="role-option" data-role="therapist">
-                            <i class="fas fa-user-md"></i>
-                            <span>Professional Therapist</span>
-                        </div>
-                    </div>
-                </div>
-
+ 
+ 
+<div class="role-selector">
+    <h3>Who would you like to talk with?</h3>
+    <div class="role-options">
+        <div class="role-option active" data-role="supportive friend">
+            <i class="fas fa-user-friends"></i>
+            <span>Supportive Friend</span>
+        </div>
+        <div class="role-option" data-role="mental health coach">
+            <i class="fas fa-hands-helping"></i>
+            <span>Mental Health Coach</span>
+        </div>
+        <div class="role-option" data-role="mindfulness guide">
+            <i class="fas fa-user-md"></i>
+            <span>Mindfulness Guide</span>
+        </div>
+    </div>
+</div>
+ 
+ 
                 <div class="quick-actions">
-                    <h3>Quick Help</h3>
+                    <h3>Mental Health Support</h3>
                     <div class="quick-action-buttons">
-                        <button class="quick-action-btn" data-prompt="I'm feeling anxious">Anxiety</button>
-                        <button class="quick-action-btn" data-prompt="I'm feeling lonely">Loneliness</button>
-                        <button class="quick-action-btn" data-prompt="I had a bad day">Bad Day</button>
-                        <button class="quick-action-btn" data-prompt="I need motivation">Motivation</button>
-                        <button class="quick-action-btn" data-prompt="I'm stressed about work">Work Stress</button>
-                        <button class="quick-action-btn" data-prompt="Relationship advice">Relationships</button>
-                        <button class="quick-action-btn" data-prompt="I feel discriminated">Discrimination</button>
-                        <button class="quick-action-btn" data-prompt="I need legal help">Legal Help</button>
+                        <button class="quick-action-btn" data-prompt="I'm feeling anxious and need some coping strategies">Anxiety</button>
+                        <button class="quick-action-btn" data-prompt="I'm feeling lonely and isolated">Loneliness</button>
+                        <button class="quick-action-btn" data-prompt="I'm feeling depressed today">Depression</button>
+                        <button class="quick-action-btn" data-prompt="I need mental health motivation">Motivation</button>
+                        <button class="quick-action-btn" data-prompt="I'm stressed about work and it's affecting my mental health">Work Stress</button>
+                        <button class="quick-action-btn" data-prompt="I need advice for managing grief">Grief</button>
+                        <button class="quick-action-btn" data-prompt="I'm having trouble sleeping">Sleep Issues</button>
+                        <button class="quick-action-btn" data-prompt="I need help with mindfulness techniques">Mindfulness</button>
                     </div>
                 </div>
-
+ 
                 <div class="mood-tracker">
                     <h3>Your Current Mood</h3>
                     <div class="mood-indicator">
@@ -837,7 +924,7 @@
                     </div>
                 </div>
             </div>
-
+ 
             <div class="chat-main">
                 <div class="chat-header">
                     <h2>MindMate AI Companion</h2>
@@ -846,410 +933,312 @@
                         <span>You're feeling calm today</span>
                     </div>
                 </div>
-
+ 
                 <div class="chat-messages" id="chatMessages">
-                    <div class="typing-indicator" id="typingIndicator">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-
-                    <div class="message message-ai">
-                        <div class="message-content">
-                            <p>Hello there! I'm MindMate, your AI companion. I'm here to listen, support, and help you through whatever you're feeling. How can I help you today?</p>
-                        </div>
-                        <div class="message-time">Just now</div>
-                    </div>
-
-                    <div class="message message-user">
-                        <div class="message-content">
-                            <p>I've been feeling a bit anxious lately</p>
-                        </div>
-                        <div class="message-time">Just now</div>
-                    </div>
-
-                    <div class="message message-ai message-suggestion">
-                        <div class="message-content">
-                            <p>I'm sorry to hear you're feeling anxious. That's completely normal and many people experience anxiety from time to time. Would you like to talk about what's making you feel this way?</p>
-                            <div class="suggestion-cards">
-                                <div class="suggestion-card">
-                                    <img src="https://via.placeholder.com/150" alt="Breathing Exercise">
-                                    <h4>5-4-3-2-1 Grounding</h4>
-                                    <p>A simple technique to reduce anxiety</p>
-                                </div>
-                                <div class="suggestion-card">
-                                    <img src="https://via.placeholder.com/150" alt="Calming Music">
-                                    <h4>Calming Playlist</h4>
-                                    <p>Music to soothe your nerves</p>
-                                </div>
-                                <div class="suggestion-card">
-                                    <img src="https://via.placeholder.com/150" alt="Journal Prompt">
-                                    <h4>Journal Prompt</h4>
-                                    <p>Write about what's bothering you</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-time">Just now</div>
-                    </div>
+                    <!-- Messages will be inserted here dynamically -->
                 </div>
-
-                <div class="chat-input-container">
+ 
+                <form class="chat-input-container typing-form">
                     <textarea class="chat-input" id="chatInput" placeholder="Type your message here..." rows="1"></textarea>
-                    <button class="mic-btn" id="micButton">
+                    <button type="button" class="mic-btn" id="micButton">
                         <i class="fas fa-microphone"></i>
                     </button>
-                    <button class="send-btn" id="sendButton">
+                    <button type="submit" class="send-btn" id="sendButton">
                         <i class="fas fa-paper-plane"></i>
                     </button>
-                </div>
+                </form>
                 <div class="suggestions-dropdown" id="suggestionsDropdown"></div>
             </div>
         </div>
     </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+ 
+    <script>
         // DOM Elements
-        const themeToggle = document.getElementById('themeToggle');
+        const typingForm = document.querySelector(".typing-form");
+        const chatMessages = document.getElementById("chatMessages");
+        const chatInput = document.getElementById("chatInput");
+        const sendButton = document.getElementById("sendButton");
+        const micButton = document.getElementById("micButton");
+        const themeToggle = document.getElementById("themeToggle");
+        const deleteChatButton = document.getElementById("deleteChatButton");
+        const suggestionsDropdown = document.getElementById("suggestionsDropdown");
+        const quickActionButtons = document.querySelectorAll(".quick-action-btn");
+        const moodPointer = document.querySelector(".mood-pointer");
+        const avatarMouth = document.querySelector(".avatar-mouth");
+        const avatarHalo = document.querySelector(".avatar-halo");
+        const chatMood = document.querySelector(".chat-mood span");
         const body = document.body;
-        const chatInput = document.getElementById('chatInput');
-        const sendButton = document.getElementById('sendButton');
-        const micButton = document.getElementById('micButton');
-        const chatMessages = document.getElementById('chatMessages');
-        const typingIndicator = document.getElementById('typingIndicator');
-        const suggestionsDropdown = document.getElementById('suggestionsDropdown');
-        const roleOptions = document.querySelectorAll('.role-option');
-        const quickActionButtons = document.querySelectorAll('.quick-action-btn');
-        const moodPointer = document.querySelector('.mood-pointer');
-        const avatarMouth = document.querySelector('.avatar-mouth');
-        const avatarHalo = document.querySelector('.avatar-halo');
-        const chatMood = document.querySelector('.chat-mood span');
-        
-        // Theme Toggle
-        themeToggle.addEventListener('click', function() {
-            body.classList.toggle('dark-mode');
-            const icon = themeToggle.querySelector('i');
-            if (body.classList.contains('dark-mode')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
+ 
+        // State variables
+        let userMessage = null;
+        let isResponseGenerating = false;
+ 
+        // API configuration
+        const API_KEY = "AIzaSyDzYEPGzej_kRUsVy-1BBck4dVXLeFpifs"; // Your API key here
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`;
+ 
+        // Load theme and chat data from local storage on page load
+        const loadDataFromLocalstorage = () => {
+            const savedChats = localStorage.getItem("saved-chats");
+            const isDarkMode = localStorage.getItem("themeColor") === "dark_mode";
+ 
+            // Apply the stored theme
+            if (isDarkMode) {
+                body.classList.add("dark-mode");
+                themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
             }
-        });
-
-        // Role Selection
-        roleOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                roleOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Update chat header based on role
-                const role = this.getAttribute('data-role');
-                let roleName = '';
-                switch(role) {
-                    case 'friend':
-                        roleName = 'Supportive Friend';
-                        break;
-                    case 'parent':
-                        roleName = 'Caring Parent';
-                        break;
-                    case 'therapist':
-                        roleName = 'Professional Therapist';
-                        break;
-                }
-                document.querySelector('.chat-header h2').textContent = `MindMate ${roleName}`;
-                
-                // Add a system message
-                addMessage(`I'm now in ${roleName.toLowerCase()} mode. How can I help you?`, 'ai');
-            });
-        });
-
-        // Quick Action Buttons
-        quickActionButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const prompt = this.getAttribute('data-prompt');
-                chatInput.value = prompt;
-                chatInput.focus();
-            });
-        });
-
-        // Mood Tracker Interaction
-        const moodIndicator = document.querySelector('.mood-indicator');
-        moodIndicator.addEventListener('click', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const percentage = (x / rect.width) * 100;
-            
-            // Limit pointer position within the track
-            const boundedPercentage = Math.max(0, Math.min(100, percentage));
-            moodPointer.style.left = `${boundedPercentage}%`;
-            
-            // Update mood based on position
-            updateMood(boundedPercentage);
-        });
-
-        function updateMood(percentage) {
-            let mood = '';
-            let theme = '';
-            let mouthClass = '';
-            
-            if (percentage < 20) {
-                mood = 'very stressed';
-                theme = 'theme-angry';
-                mouthClass = 'sad';
-            } else if (percentage < 40) {
-                mood = 'stressed';
-                theme = 'theme-anxious';
-                mouthClass = 'sad';
-            } else if (percentage < 60) {
-                mood = 'neutral';
-                theme = 'theme-calm';
-                mouthClass = 'neutral';
-            } else if (percentage < 80) {
-                mood = 'calm';
-                theme = 'theme-calm';
-                mouthClass = 'smile';
+ 
+            // Restore saved chats
+            if (savedChats) {
+                chatMessages.innerHTML = savedChats;
+                chatMessages.scrollTo(0, chatMessages.scrollHeight);
             } else {
-                mood = 'happy';
-                theme = 'theme-happy';
-                mouthClass = 'smile';
-                avatarHalo.classList.add('active');
-            }
-            
-            // Update UI
-            chatMood.textContent = `You're feeling ${mood} today`;
-            body.className = theme + (body.classList.contains('dark-mode') ? ' dark-mode' : '');
-            avatarMouth.className = 'avatar-mouth ' + mouthClass;
-            
-            // Remove halo if not happy
-            if (percentage < 80) {
-                avatarHalo.classList.remove('active');
+                // Add welcome message if no saved chats
+                addMessage("Hello there! I'm MindMate, your AI companion. I'm here to listen, support, and help you through whatever you're feeling. How can I help you today?", "incoming");
             }
         }
-
-        // Auto-resize textarea
-        chatInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-            
-            // Show/hide suggestions
-            if (this.value.length > 0) {
-                showSuggestions(this.value);
-            } else {
-                suggestionsDropdown.style.display = 'none';
-            }
-        });
-
-        // Send Message
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message === '') return;
-            
-            addMessage(message, 'user');
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-            suggestionsDropdown.style.display = 'none';
-            
-            // Show typing indicator
-            simulateTyping();
-        }
-
-        // Add message to chat
-        function addMessage(content, sender, type = '') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message message-${sender}`;
-            if (type) messageDiv.classList.add(`message-${type}`);
-            
+ 
+        // Create a new message element and return it
+        const createMessageElement = (content, sender) => {
             const now = new Date();
             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
+ 
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${sender}`;
+ 
             messageDiv.innerHTML = `
                 <div class="message-content">
-                    <p>${content}</p>
+                    <img class="avatar" src="${sender === 'outgoing' ? 'https://via.placeholder.com/30' : 'https://via.placeholder.com/30/2196F3/FFFFFF'}" alt="${sender === 'outgoing' ? 'User' : 'AI'} avatar">
+                    <p class="text">${content}</p>
+                    ${sender === 'incoming' ? '<span onClick="copyMessage(this)" class="icon material-icons">content_copy</span>' : ''}
                 </div>
                 <div class="message-time">${timeString}</div>
             `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+ 
+            return messageDiv;
         }
-
-        // Simulate AI typing
-        function simulateTyping() {
-            typingIndicator.classList.add('active');
-            
-            // Hide after random delay (simulating thinking time)
-            setTimeout(() => {
-                typingIndicator.classList.remove('active');
-                
-                // Generate AI response
-                const lastUserMessage = document.querySelector('.message-user:last-child .message-content p').textContent;
-                const aiResponse = generateAIResponse(lastUserMessage);
-                
-                addMessage(aiResponse.text, 'ai', aiResponse.type);
-                
-                // If response has suggestions, add them
-                if (aiResponse.suggestions) {
-                    setTimeout(() => {
-                        const suggestionDiv = document.createElement('div');
-                        suggestionDiv.className = 'suggestion-cards';
-                        
-                        aiResponse.suggestions.forEach(suggestion => {
-                            suggestionDiv.innerHTML += `
-                                <div class="suggestion-card">
-                                    <img src="${suggestion.image}" alt="${suggestion.title}">
-                                    <h4>${suggestion.title}</h4>
-                                    <p>${suggestion.description}</p>
-                                </div>
-                            `;
-                        });
-                        
-                        const lastAiMessage = document.querySelector('.message-ai:last-child .message-content');
-                        lastAiMessage.appendChild(suggestionDiv);
-                    }, 300);
-                }
-            }, 1000 + Math.random() * 2000);
+ 
+        // Add message to chat
+        const addMessage = (content, sender) => {
+            const messageElement = createMessageElement(content, sender);
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTo(0, chatMessages.scrollHeight);
+            localStorage.setItem("saved-chats", chatMessages.innerHTML);
         }
-
-        // Generate AI response based on user input
-        function generateAIResponse(userMessage) {
-            const responses = {
-                'anxious': {
-                    text: "I understand that anxiety can be really challenging. Remember that what you're feeling is valid and temporary. Would you like to try a simple breathing exercise together?",
-                    type: 'suggestion',
-                    suggestions: [
-                        {
-                            image: 'https://via.placeholder.com/150',
-                            title: 'Box Breathing',
-                            description: '4-4-4-4 breathing technique'
-                        },
-                        {
-                            image: 'https://via.placeholder.com/150',
-                            title: 'Guided Meditation',
-                            description: '5-minute anxiety relief'
-                        }
-                    ]
-                },
-                'lonely': {
-                    text: "Feeling lonely can be really tough. Remember that you're not alone in feeling this way. Would you like me to suggest some ways to connect with others or activities that might help?",
-                    type: 'suggestion'
-                },
-                'bad day': {
-                    text: "I'm sorry to hear you're having a bad day. Sometimes just acknowledging that can help. Would you like to talk about what happened or would you prefer some suggestions to help shift your mood?",
-                    type: 'suggestion'
-                },
-                'motivation': {
-                    text: "It's completely normal to feel unmotivated sometimes. Remember that small steps still move you forward. What's one tiny thing you could do right now that would make you feel a little bit better?",
-                    type: 'suggestion'
-                },
-                'legal help': {
-                    text: "I'm not a lawyer, but I can help you find resources for legal assistance. For immediate help, you might want to contact your local legal aid society. Would you like me to look up some contacts for you?",
-                    type: 'legal'
-                },
-                'default': {
-                    text: "Thank you for sharing that with me. I'm here to listen and support you. Can you tell me more about how you're feeling?",
-                    type: ''
+ 
+        // Show typing effect by displaying words one by one
+        const showTypingEffect = (text, textElement, incomingMessageDiv) => {
+            const words = text.split(' ');
+            let currentWordIndex = 0;
+ 
+            const typingInterval = setInterval(() => {
+                // Append each word to the text element with a space
+                textElement.innerText += (currentWordIndex === 0 ? '' : ' ') + words[currentWordIndex++];
+                incomingMessageDiv.querySelector(".icon").classList.add("hide");
+ 
+                // If all words are displayed
+                if (currentWordIndex === words.length) {
+                    clearInterval(typingInterval);
+                    isResponseGenerating = false;
+                    incomingMessageDiv.querySelector(".icon").classList.remove("hide");
+                    localStorage.setItem("saved-chats", chatMessages.innerHTML);
                 }
-            };
-            
-            // Find the best matching response
-            let responseKey = 'default';
-            for (const key in responses) {
-                if (userMessage.toLowerCase().includes(key)) {
-                    responseKey = key;
-                    break;
-                }
-            }
-            
-            return responses[responseKey] || responses['default'];
+                chatMessages.scrollTo(0, chatMessages.scrollHeight);
+            }, 75);
         }
-
-        // Show suggestions dropdown
-        function showSuggestions(input) {
-            const suggestions = [
-                "I'm feeling anxious today",
-                "How can I improve my mood?",
-                "I need help with stress",
-                "Can you suggest some relaxation techniques?",
-                "I'm having trouble sleeping",
-                "I feel lonely"
-            ];
-            
-            const filtered = suggestions.filter(s => 
-                s.toLowerCase().includes(input.toLowerCase())
-            );
-            
-            if (filtered.length > 0) {
-                suggestionsDropdown.innerHTML = '';
-                filtered.forEach(suggestion => {
-                    const item = document.createElement('div');
-                    item.className = 'suggestion-item';
-                    item.textContent = suggestion;
-                    item.addEventListener('click', function() {
-                        chatInput.value = suggestion;
-                        suggestionsDropdown.style.display = 'none';
-                        chatInput.focus();
-                    });
-                    suggestionsDropdown.appendChild(item);
-                });
-                suggestionsDropdown.style.display = 'block';
+ 
+        // Fetch response from the API based on user message
+        // Modify this function in the script section
+const generateAPIResponse = async (incomingMessageDiv) => {
+    const textElement = incomingMessageDiv.querySelector(".text");
+    const selectedRole = document.querySelector(".role-option.active").getAttribute("data-role");
+    const currentMood = getCurrentMood(); // We'll need to implement this function
+ 
+    try {
+        // Send a POST request to the API with the user's message and mental health parameters
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                contents: [{ 
+                    role: "user", 
+                    parts: [{ text: 
+                        `You are MindMate AI, a specialized mental health support assistant. 
+                        Acting as a ${selectedRole}, provide supportive mental health advice for someone who is feeling ${currentMood}.
+                        Do not provide medical diagnoses or treatment recommendations.
+                        Respond only to mental health related queries and politely redirect other topics.
+                        User message: ${userMessage}`
+                    }] 
+                }] 
+            }),
+        });
+ 
+        // Rest of the function remains the same
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error.message);
+ 
+        const apiResponse = data?.candidates[0]?.content?.parts[0]?.text?.replace(/\*\*(.*?)\*\*/g, '$1') || "I'm sorry, I couldn't process that request. Could you try again?";
+        showTypingEffect(apiResponse, textElement, incomingMessageDiv);
+    } catch (error) {
+        // Error handling remains the same
+    }
+}
+ 
+        // Show a loading animation while waiting for the API response
+        const showLoadingAnimation = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+ 
+            const html = `<div class="message-content">
+                            <img class="avatar" src="https://via.placeholder.com/30/2196F3/FFFFFF" alt="AI avatar">
+                            <p class="text"></p>
+                            <div class="loading-indicator">
+                                <div class="loading-bar"></div>
+                                <div class="loading-bar"></div>
+                                <div class="loading-bar"></div>
+                            </div>
+                            <span onClick="copyMessage(this)" class="icon material-icons">content_copy</span>
+                        </div>
+                        <div class="message-time">${timeString}</div>`;
+ 
+            const incomingMessageDiv = document.createElement("div");
+            incomingMessageDiv.className = "message incoming loading";
+            incomingMessageDiv.innerHTML = html;
+            chatMessages.appendChild(incomingMessageDiv);
+ 
+            chatMessages.scrollTo(0, chatMessages.scrollHeight);
+            generateAPIResponse(incomingMessageDiv);
+        }
+ 
+        // Copy message text to the clipboard
+        window.copyMessage = (copyButton) => {
+            const messageText = copyButton.parentElement.querySelector(".text").innerText;
+ 
+            navigator.clipboard.writeText(messageText);
+            copyButton.innerText = "done";
+            setTimeout(() => copyButton.innerText = "content_copy", 1000);
+        }
+ 
+        // Handle sending outgoing chat messages
+        const handleOutgoingChat = () => {
+            userMessage = chatInput.value.trim();
+            if (!userMessage || isResponseGenerating) return;
+ 
+            isResponseGenerating = true;
+ 
+            addMessage(userMessage, "outgoing");
+            chatInput.value = "";
+            chatInput.style.height = "auto";
+            suggestionsDropdown.style.display = "none";
+ 
+            setTimeout(showLoadingAnimation, 500);
+        }
+ 
+        // Quick Action Buttons
+        quickActionButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                userMessage = this.getAttribute("data-prompt");
+                chatInput.value = userMessage;
+                chatInput.focus();
+            });
+        });
+ 
+        // Mood Tracker Interaction
+        const moodIndicator = document.querySelector(".mood-indicator");
+        moodIndicator.addEventListener("click", function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+ 
+            // Limit pointer position within the track
+            const boundedPercentage = Math.max(0, Math.min(100, percentage));
+            moodPointer.style.left = `${boundedPercentage}%`;
+ 
+            // Update mood based on position
+            updateMood(boundedPercentage);
+        });
+        // Add this function in the script section
+function getCurrentMood() {
+    const moodPointer = document.querySelector(".mood-pointer");
+    const position = parseFloat(moodPointer.style.left);
+ 
+    if (position < 20) return "very stressed";
+    else if (position < 40) return "stressed";
+    else if (position < 60) return "neutral";
+    else if (position < 80) return "calm";
+    else return "happy";
+}
+        function updateMood(percentage) {
+            let mood = "";
+            let theme = "";
+            let mouthClass = "";
+ 
+            if (percentage < 20) {
+                mood = "very stressed";
+                theme = "theme-angry";
+                mouthClass = "sad";
+            } else if (percentage < 40) {
+                mood = "stressed";
+                theme = "theme-anxious";
+                mouthClass = "sad";
+            } else if (percentage < 60) {
+                mood = "neutral";
+                theme = "theme-calm";
+                mouthClass = "neutral";
+            } else if (percentage < 80) {
+                mood = "calm";
+                theme = "theme-calm";
+                mouthClass = "smile";
             } else {
-                suggestionsDropdown.style.display = 'none';
+                mood = "happy";
+                theme = "theme-happy";
+                mouthClass = "smile";
+                avatarHalo.classList.add("active");
+            }
+ 
+            // Update UI
+            chatMood.textContent = `You're feeling ${mood} today`;
+            body.className = theme + (body.classList.contains("dark-mode") ? " dark-mode" : "");
+            avatarMouth.className = "avatar-mouth " + mouthClass;
+ 
+            // Remove halo if not happy
+            if (percentage < 80) {
+                avatarHalo.classList.remove("active");
             }
         }
-
-        // Event Listeners
-        sendButton.addEventListener('click', sendMessage);
-        
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
+ 
+        // Auto-resize textarea
+        chatInput.addEventListener("input", function() {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight) + "px";
+        });
+ 
+        // Theme Toggle
+        themeToggle.addEventListener("click", () => {
+            const isDarkMode = body.classList.toggle("dark-mode");
+            localStorage.setItem("themeColor", isDarkMode ? "dark_mode" : "light_mode");
+            const icon = themeToggle.querySelector("i");
+            icon.classList.toggle("fa-moon");
+            icon.classList.toggle("fa-sun");
+        });
+ 
+        // Delete all chats from local storage when button is clicked
+        deleteChatButton.addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete all the chats?")) {
+                localStorage.removeItem("saved-chats");
+                chatMessages.innerHTML = "";
+                addMessage("Hello there! I'm MindMate, your AI companion. I'm here to listen, support, and help you through whatever you're feeling. How can I help you today?", "incoming");
             }
         });
-        
-        // Voice Recognition
-        let recognition;
-        try {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            
-            micButton.addEventListener('click', function() {
-                if (micButton.classList.contains('listening')) {
-                    recognition.stop();
-                    micButton.classList.remove('listening');
-                } else {
-                    recognition.start();
-                    micButton.classList.add('listening');
-                }
-            });
-            
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                chatInput.value = transcript;
-                micButton.classList.remove('listening');
-            };
-            
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error', event.error);
-                micButton.classList.remove('listening');
-            };
-            
-            recognition.onend = function() {
-                if (micButton.classList.contains('listening')) {
-                    micButton.classList.remove('listening');
-                }
-            };
-        } catch(e) {
-            console.warn('Speech recognition not supported');
-            micButton.style.display = 'none';
-        }
-        
-        // Initial setup
-        updateMood(65); // Set initial mood to calm
-    });
-</script>
+ 
+        // Prevent default form submission and handle outgoing chat
+        typingForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            handleOutgoingChat();
+        });
+ 
+        // Initialize the chat
+        loadDataFromLocalstorage();
+    </script>
 </body>
 </html>
