@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate | Your Mental Wellness Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4d44db;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --text: #333;
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Dark mode variables */
+        .dark-mode {
+            --primary: #8a82ff;
+            --secondary: #6c63ff;
+            --light: #2d3748;
+            --dark: #f8f9fa;
+            --text: #f0f0f0;
+            --bg: #1a202c;
+            --card-bg: #2d3748;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            position: relative;
+            z-index: 10;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            margin-right: 0.8rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+
+        .user-info h3 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-link i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .mood-indicator {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .mood-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .mood-title i {
+            margin-right: 0.5rem;
+        }
+
+        .mood-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .mood-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logout-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main content styles */
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .greeting h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .greeting p {
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dark-mode-toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: var(--light);
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle i {
+            font-size: 0.8rem;
+            color: var(--dark);
+        }
+
+        .dark-mode-toggle .toggle-ball {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            left: 3px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .dark-mode-toggle .toggle-ball {
+            transform: translateX(26px);
+        }
+
+        .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .notification-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+
+        /* Dashboard cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+        }
+
+        .journal-card .card-icon {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+
+        .mindmate-card .card-icon {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+
+        .resources-card .card-icon {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info);
+        }
+
+        .card-content {
+            margin-bottom: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Mood chart */
+        .mood-chart-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            height: 300px;
+            position: relative;
+        }
+
+        .mood-chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .mood-chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .mood-chart-period {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .period-btn {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .period-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Recent entries */
+        .recent-entries {
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .entries-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .entries-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .entries-list {
+            list-style: none;
+        }
+
+        .entry-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .entry-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .entry-item:last-child {
+            border-bottom: none;
+        }
+
+        .entry-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .entry-mood {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .entry-text {
+            flex: 1;
+        }
+
+        .entry-text h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+        .entry-text p {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .entry-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Mood-specific styles */
+        .mood-happy {
+            --primary: #4CAF50;
+            --secondary: #2E7D32;
+        }
+
+        .mood-calm {
+            --primary: #2196F3;
+            --secondary: #1565C0;
+        }
+
+        .mood-neutral {
+            --primary: #9E9E9E;
+            --secondary: #616161;
+        }
+
+        .mood-anxious {
+            --primary: #FF9800;
+            --secondary: #EF6C00;
+        }
+
+        .mood-sad {
+            --primary: #673AB7;
+            --secondary: #4527A0;
+        }
+
+        .mood-angry {
+            --primary: #F44336;
+            --secondary: #C62828;
+        }
+    </style>
+</head>
+<body class="mood-neutral">
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>MindMate</h1>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <div class="user-info">
+                    <h3 id="userName">User Name</h3>
+                    <p>Last active: just now</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="journal.html" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Journal</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="mindmate.html" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>MindMate AI</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="resources.html" class="nav-link">
+                        <i class="fas fa-heart"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="community.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Herwellness.html" class="nav-link">
+                        <i class="fas fa-female"></i>
+                        <span>Her Wellness</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="therapists.html" class="nav-link">
+                        <i class="fas fa-user-md"></i>
+                        <span>Therapists</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mood-indicator">
+                <div class="mood-title">
+                    <i class="fas fa-smile"></i>
+                    <span>Current Mood</span>
+                </div>
+                <div class="mood-value" id="currentMood">Neutral</div>
+                <div class="mood-description" id="moodDescription">You're feeling balanced and steady today.</div>
+            </div>
+
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <div class="greeting">
+                    <h2 id="greetingText">Good Morning, <span id="userFirstName">User</span></h2>
+                    <p>Here's your mental wellness overview</p>
+                </div>
+
+                <div class="header-actions">
+                    <div class="dark-mode-toggle" id="darkModeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <div class="toggle-ball"></div>
+                    </div>
+
+                    <div class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-grid">
+                <div class="card journal-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="card-header">
+                        <h3 class="card-title">Daily Journal</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>Write about your thoughts, feelings, and experiences today.</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            New Entry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card mindmate-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="card-header">
+                        <h3 class="card-title">Talk to MindMate</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>Your AI companion is here to listen and help you through tough times.</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-comment"></i>
+                            Start Chat
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card resources-card fade-in" style="animation-delay: 0.3s;">
+                    <div class="card-header">
+                        <h3 class="card-title">Personalized Resources</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>Based on your recent entries, we've curated resources just for you.</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-arrow-right"></i>
+                            Explore
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood Chart -->
+            <div class="mood-chart-container fade-in" style="animation-delay: 0.4s;">
+                <div class="mood-chart-header">
+                    <h3 class="mood-chart-title">Your Mood Trends</h3>
+                    <div class="mood-chart-period">
+                        <button class="period-btn">Week</button>
+                        <button class="period-btn active">Month</button>
+                        <button class="period-btn">Year</button>
+                    </div>
+                </div>
+                <div id="moodChart" style="height: 100%;">
+                    <!-- Chart will be rendered here -->
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                        <p>Mood chart visualization will appear here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Entries -->
+            <div class="recent-entries fade-in" style="animation-delay: 0.5s;">
+                <div class="entries-header">
+                    <h3 class="entries-title">Recent Journal Entries</h3>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-history"></i>
+                        View All
+                    </button>
+                </div>
+
+                <ul class="entries-list">
+                    <li class="entry-item">
+                        <div class="entry-content">
+                            <div class="entry-mood">😊</div>
+                            <div class="entry-text">
+                                <h4>Had a great day with friends</h4>
+                                <p>We went to the park and had so much fun playing frisbee...</p>
+                            </div>
+                        </div>
+                        <div class="entry-date">Today</div>
+                    </li>
+                    <li class="entry-item">
+                        <div class="entry-content">
+                            <div class="entry-mood">😔</div>
+                            <div class="entry-text">
+                                <h4>Feeling a bit lonely</h4>
+                                <p>Not sure why but I've been feeling isolated even when...</p>
+                            </div>
+                        </div>
+                        <div class="entry-date">Yesterday</div>
+                    </li>
+                    <li class="entry-item">
+                        <div class="entry-content">
+                            <div class="entry-mood">😟</div>
+                            <div class="entry-text">
+                                <h4>Work stress is getting to me</h4>
+                                <p>The deadline is approaching and I'm not sure if I can...</p>
+                            </div>
+                        </div>
+                        <div class="entry-date">2 days ago</div>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user data from localStorage (set during onboarding)
+            const userData = JSON.parse(localStorage.getItem('mindMateUser')) || {
+                name: 'User',
+                avatar: '👤',
+                mood: 'neutral',
+                theme: 'default'
+            };
+
+            // Set user info
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userFirstName').textContent = userData.name.split(' ')[0];
+            document.getElementById('userAvatar').textContent = userData.avatar || '👤';
+            
+            // Set initial mood
+            setMood(userData.mood || 'neutral');
+            
+            // Set greeting based on time of day
+            setGreeting();
+            
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            
+            // Check for saved theme preference or system preference
+            const savedTheme = localStorage.getItem('mindMateTheme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                body.classList.add('dark-mode');
+            }
+            
+            darkModeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                const isDark = body.classList.contains('dark-mode');
+                localStorage.setItem('mindMateTheme', isDark ? 'dark' : 'light');
+                
+                // Change moon/sun icon opacity
+                const icons = this.querySelectorAll('i');
+                icons[0].style.opacity = isDark ? '0.5' : '1';
+                icons[1].style.opacity = isDark ? '1' : '0.5';
+            });
+            
+            // Set initial icon opacity
+            const isDark = body.classList.contains('dark-mode');
+            const icons = darkModeToggle.querySelectorAll('i');
+            icons[0].style.opacity = isDark ? '0.5' : '1';
+            icons[1].style.opacity = isDark ? '1' : '0.5';
+            
+            // Notification button
+            const notificationBtn = document.getElementById('notificationBtn');
+            notificationBtn.addEventListener('click', function() {
+                alert('You have 3 new notifications');
+            });
+            
+            // Period buttons for mood chart
+            const periodBtns = document.querySelectorAll('.period-btn');
+            periodBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    periodBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, this would update the chart data
+                });
+            });
+            
+            // Set greeting based on time of day
+            function setGreeting() {
+                const hour = new Date().getHours();
+                const greeting = document.getElementById('greetingText');
+                
+                if (hour < 12) {
+                    greeting.textContent = `Good Morning, ${userData.name.split(' ')[0]}`;
+                } else if (hour < 18) {
+                    greeting.textContent = `Good Afternoon, ${userData.name.split(' ')[0]}`;
+                } else {
+                    greeting.textContent = `Good Evening, ${userData.name.split(' ')[0]}`;
+                    
+                    // Automatically switch to dark mode in the evening if preference not set
+                    if (!localStorage.getItem('mindMateTheme') && !body.classList.contains('dark-mode')) {
+                        body.classList.add('dark-mode');
+                    }
+                }
+            }
+            
+            // Set mood and update UI
+            function setMood(mood) {
+                const moodClasses = ['mood-happy', 'mood-calm', 'mood-neutral', 'mood-anxious', 'mood-sad', 'mood-angry'];
+                
+                // Remove all mood classes
+                moodClasses.forEach(mc => body.classList.remove(mc));
+                
+                // Add current mood class
+                body.classList.add(`mood-${mood}`);
+                
+                // Update mood display
+                const moodElement = document.getElementById('currentMood');
+                const moodDescription = document.getElementById('moodDescription');
+                
+                switch(mood) {
+                    case 'happy':
+                        moodElement.textContent = 'Happy';
+                        moodDescription.textContent = "You're feeling joyful and positive today!";
+                        break;
+                    case 'calm':
+                        moodElement.textContent = 'Calm';
+                        moodDescription.textContent = "You're feeling peaceful and relaxed.";
+                        break;
+                    case 'neutral':
+                        moodElement.textContent = 'Neutral';
+                        moodDescription.textContent = "You're feeling balanced and steady today.";
+                        break;
+                    case 'anxious':
+                        moodElement.textContent = 'Anxious';
+                        moodDescription.textContent = "You seem to be feeling worried or nervous. MindMate can help.";
+                        break;
+                    case 'sad':
+                        moodElement.textContent = 'Sad';
+                        moodDescription.textContent = "You're feeling down. Remember, it's okay to feel this way.";
+                        break;
+                    case 'angry':
+                        moodElement.textContent = 'Angry';
+                        moodDescription.textContent = "You seem frustrated. Let's work through these feelings.";
+                        break;
+                }
+                
+                // Save mood to localStorage
+                userData.mood = mood;
+                localStorage.setItem('mindMateUser', JSON.stringify(userData));
+            }
+            
+            // Simulate mood change for demo purposes
+            setTimeout(() => {
+                setMood('happy');
+            }, 5000);
+            
+            // Check for night time and suggest sleep if appropriate
+            checkSleepTime();
+            
+            function checkSleepTime() {
+                const hour = new Date().getHours();
+                if (hour >= 22 || hour <= 5) {
+                    // Show gentle reminder about sleep
+                    setTimeout(() => {
+                        const shouldShow = localStorage.getItem('sleepReminder') !== 'false';
+                        if (shouldShow) {
+                            if (confirm("It's getting late. MindMate suggests winding down for better sleep. Would you like to set a reminder to go to bed soon?")) {
+                                alert("Sleep reminder set for 30 minutes from now. Good night!");
+                            }
+                            localStorage.setItem('sleepReminder', 'false');
+                            
+                            // Reset reminder tomorrow
+                            setTimeout(() => {
+                                localStorage.removeItem('sleepReminder');
+                            }, 12 * 60 * 60 * 1000); // 12 hours
+                        }
+                    }, 10000); // Show after 10 seconds
+                }
+            }
+        });
+    </script>
+</body>
+</html>

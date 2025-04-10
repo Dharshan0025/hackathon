@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate | Let's Get Started</title>
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4d44db;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .onboarding-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 25%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .onboarding-header h1 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .onboarding-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: #666;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            padding-right: 2.5rem;
+        }
+
+        .avatar-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .avatar-option:hover {
+            transform: scale(1.1);
+        }
+
+        .avatar-option.selected {
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .mood-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .mood-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .mood-option:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .mood-option.selected {
+            background: rgba(108, 99, 255, 0.2);
+        }
+
+        .mood-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mood-label {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(1000px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            }
+
+            .onboarding-container {
+                background: rgba(30, 30, 46, 0.9);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .progress-container {
+                background: #333;
+            }
+
+            .onboarding-header h1 {
+                color: var(--light);
+            }
+
+            .onboarding-header p {
+                color: #aaa;
+            }
+
+            .form-control {
+                background: rgba(30, 30, 46, 0.7);
+                border-color: #444;
+                color: #eee;
+            }
+
+            .form-control:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+            }
+
+            .select-wrapper::after {
+                color: #aaa;
+            }
+
+            .form-group label {
+                color: var(--light);
+            }
+
+            .avatar-option {
+                background: #333;
+            }
+
+            .mood-label {
+                color: var(--light);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .onboarding-container {
+                padding: 1.5rem;
+            }
+
+            .avatar-selection {
+                justify-content: center;
+            }
+
+            .mood-selector {
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+        </div>
+
+        <div class="onboarding-header">
+            <h1>Let's Personalize Your Experience</h1>
+            <p>Help us understand you better to provide tailored support</p>
+        </div>
+
+        <!-- Step 1: Basic Info -->
+        <div class="form-step active" id="step1-form">
+            <div class="form-group">
+                <label for="name">What should we call you?</label>
+                <input type="text" id="name" class="form-control" placeholder="Your name or nickname">
+            </div>
+
+            <div class="form-group">
+                <label>How do you identify?</label>
+                <div class="select-wrapper">
+                    <select id="gender" class="form-control">
+                        <option value="" disabled selected>Select your identity</option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="non-binary">Non-binary</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Choose an avatar that represents you</label>
+                <div class="avatar-selection">
+                    <div class="avatar-option" data-avatar="👩">👩</div>
+                    <div class="avatar-option" data-avatar="👨">👨</div>
+                    <div class="avatar-option" data-avatar="🧑">🧑</div>
+                    <div class="avatar-option" data-avatar="👧">👧</div>
+                    <div class="avatar-option" data-avatar="👦">👦</div>
+                    <div class="avatar-option" data-avatar="🤖">🤖</div>
+                </div>
+                <input type="hidden" id="avatar" value="">
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-outline" disabled>Back</button>
+                <button class="btn btn-primary" id="next1">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Demographics -->
+        <div class="form-step" id="step2-form">
+            <div class="form-group">
+                <label for="age">Your Age</label>
+                <input type="number" id="age" class="form-control" placeholder="Enter your age" min="13" max="120">
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country/Region</label>
+                <input type="text" id="country" class="form-control" placeholder="Where are you from?">
+            </div>
+
+            <div class="form-group">
+                <label for="language">Primary Language</label>
+                <div class="select-wrapper">
+                    <select id="language" class="form-control">
+                        <option value="" disabled selected>Select your language</option>
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="mandarin">Mandarin</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-outline" id="back2">Back</button>
+                <button class="btn btn-primary" id="next2">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Mental Wellness -->
+        <div class="form-step" id="step3-form">
+            <div class="form-group">
+                <label>How are you feeling today?</label>
+                <div class="mood-selector">
+                    <div class="mood-option" data-mood="happy">
+                        <div class="mood-icon">😊</div>
+                        <div class="mood-label">Happy</div>
+                    </div>
+                    <div class="mood-option" data-mood="calm">
+                        <div class="mood-icon">😌</div>
+                        <div class="mood-label">Calm</div>
+                    </div>
+                    <div class="mood-option" data-mood="neutral">
+                        <div class="mood-icon">😐</div>
+                        <div class="mood-label">Neutral</div>
+                    </div>
+                    <div class="mood-option" data-mood="anxious">
+                        <div class="mood-icon">😟</div>
+                        <div class="mood-label">Anxious</div>
+                    </div>
+                    <div class="mood-option" data-mood="sad">
+                        <div class="mood-icon">😔</div>
+                        <div class="mood-label">Sad</div>
+                    </div>
+                </div>
+                <input type="hidden" id="mood" value="">
+            </div>
+
+            <div class="form-group">
+                <label>What brings you to MindMate?</label>
+                <div class="select-wrapper">
+                    <select id="purpose" class="form-control">
+                        <option value="" disabled selected>Select your primary reason</option>
+                        <option value="stress">Stress management</option>
+                        <option value="anxiety">Anxiety relief</option>
+                        <option value="depression">Depression support</option>
+                        <option value="self-improvement">Personal growth</option>
+                        <option value="relationships">Relationship issues</option>
+                        <option value="other">Just exploring</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-outline" id="back3">Back</button>
+                <button class="btn btn-primary" id="next3">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Preferences -->
+        <div class="form-step" id="step4-form">
+            <div class="form-group">
+                <label>Notification Preferences</label>
+                <div style="margin-top: 1rem;">
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" id="daily-reminder" style="margin-right: 10px;" checked>
+                        Daily journal reminders
+                    </label>
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" id="weekly-insights" style="margin-right: 10px;" checked>
+                        Weekly mental health insights
+                    </label>
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" id="motivational" style="margin-right: 10px;" checked>
+                        Motivational messages
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Color Theme Preference</label>
+                <div style="display: flex; gap: 15px; margin-top: 1rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #6c63ff; cursor: pointer; border: 3px solid transparent;" data-theme="default" class="theme-option"></div>
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #4CAF50; cursor: pointer; border: 3px solid transparent;" data-theme="green" class="theme-option"></div>
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #2196F3; cursor: pointer; border: 3px solid transparent;" data-theme="blue" class="theme-option"></div>
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #9C27B0; cursor: pointer; border: 3px solid transparent;" data-theme="purple" class="theme-option"></div>
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #FF9800; cursor: pointer; border: 3px solid transparent;" data-theme="orange" class="theme-option"></div>
+                </div>
+                <input type="hidden" id="theme" value="default">
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="dark-mode" style="margin-right: 10px;">
+                    Enable dark mode at night
+                </label>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-outline" id="back4">Back</button>
+                <button class="btn btn-primary" id="finish">Complete Setup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Current step tracking
+            let currentStep = 1;
+            const totalSteps = 4;
+            
+            // DOM elements
+            const progressBar = document.getElementById('progressBar');
+            const stepElements = document.querySelectorAll('.step');
+            const formSteps = document.querySelectorAll('.form-step');
+            
+            // Navigation buttons
+            const next1 = document.getElementById('next1');
+            const next2 = document.getElementById('next2');
+            const next3 = document.getElementById('next3');
+            const back2 = document.getElementById('back2');
+            const back3 = document.getElementById('back3');
+            const back4 = document.getElementById('back4');
+            const finish = document.getElementById('finish');
+            
+            // Form elements
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            const moodOptions = document.querySelectorAll('.mood-option');
+            const themeOptions = document.querySelectorAll('.theme-option');
+            
+            // Update progress bar and steps
+            function updateProgress() {
+                // Update progress bar
+                const progressPercentage = (currentStep / totalSteps) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                
+                // Update step indicators
+                stepElements.forEach((step, index) => {
+                    if (index + 1 < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+                
+                // Update form steps
+                formSteps.forEach((form, index) => {
+                    if (index + 1 === currentStep) {
+                        form.classList.add('active');
+                    } else {
+                        form.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Go to next step
+            function nextStep() {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateProgress();
+                }
+            }
+            
+            // Go to previous step
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateProgress();
+                }
+            }
+            
+            // Avatar selection
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('avatar').value = this.getAttribute('data-avatar');
+                });
+            });
+            
+            // Mood selection
+            moodOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    moodOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('mood').value = this.getAttribute('data-mood');
+                });
+            });
+            
+            // Theme selection
+            themeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    themeOptions.forEach(opt => opt.style.borderColor = 'transparent');
+                    this.style.borderColor = '#6c63ff';
+                    document.getElementById('theme').value = this.getAttribute('data-theme');
+                });
+            });
+            
+            // Event listeners
+            next1.addEventListener('click', function() {
+                if (validateStep1()) nextStep();
+            });
+            
+            next2.addEventListener('click', function() {
+                if (validateStep2()) nextStep();
+            });
+            
+            next3.addEventListener('click', function() {
+                if (validateStep3()) nextStep();
+            });
+            
+            back2.addEventListener('click', prevStep);
+            back3.addEventListener('click', prevStep);
+            back4.addEventListener('click', prevStep);
+            
+            finish.addEventListener('click', function() {
+                if (validateStep4()) {
+                    completeOnboarding();
+                }
+            });
+            
+            // Validation functions
+            function validateStep1() {
+                const name = document.getElementById('name').value.trim();
+                const gender = document.getElementById('gender').value;
+                const avatar = document.getElementById('avatar').value;
+                
+                if (!name) {
+                    alert('Please enter your name');
+                    return false;
+                }
+                
+                if (!gender) {
+                    alert('Please select how you identify');
+                    return false;
+                }
+                
+                if (!avatar) {
+                    alert('Please select an avatar');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            function validateStep2() {
+                const age = document.getElementById('age').value;
+                const country = document.getElementById('country').value.trim();
+                const language = document.getElementById('language').value;
+                
+                if (!age || age < 13 || age > 120) {
+                    alert('Please enter a valid age between 13 and 120');
+                    return false;
+                }
+                
+                if (!country) {
+                    alert('Please enter your country/region');
+                    return false;
+                }
+                
+                if (!language) {
+                    alert('Please select your primary language');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            function validateStep3() {
+                const mood = document.getElementById('mood').value;
+                const purpose = document.getElementById('purpose').value;
+                
+                if (!mood) {
+                    alert('Please select your current mood');
+                    return false;
+                }
+                
+                if (!purpose) {
+                    alert('Please select your primary reason for using MindMate');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            function validateStep4() {
+                // All fields are optional in this step
+                return true;
+            }
+            
+            // Complete onboarding
+            function completeOnboarding() {
+                // Create confetti effect
+                createConfetti();
+                
+                // In a real app, you would save all the data here
+                const userData = {
+                    name: document.getElementById('name').value.trim(),
+                    gender: document.getElementById('gender').value,
+                    avatar: document.getElementById('avatar').value,
+                    age: document.getElementById('age').value,
+                    country: document.getElementById('country').value.trim(),
+                    language: document.getElementById('language').value,
+                    mood: document.getElementById('mood').value,
+                    purpose: document.getElementById('purpose').value,
+                    notifications: {
+                        daily: document.getElementById('daily-reminder').checked,
+                        weekly: document.getElementById('weekly-insights').checked,
+                        motivational: document.getElementById('motivational').checked
+                    },
+                    theme: document.getElementById('theme').value,
+                    darkMode: document.getElementById('dark-mode').checked
+                };
+                
+                console.log('User data:', userData); // For demo purposes
+                
+                // Show completion message
+                setTimeout(() => {
+                    alert('Setup complete! Welcome to MindMate.');
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+            
+            // Create confetti effect
+            function createConfetti() {
+                const colors = ['#6c63ff', '#4d44db', '#8a82ff', '#a59cff'];
+                const container = document.querySelector('.onboarding-container');
+                
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(confetti);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }
+            }
+            
+            // Initialize
+            updateProgress();
+            
+            // Set default theme selection
+            document.querySelector('.theme-option[data-theme="default"]').click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - Personalized Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dynamic Color Variables */
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --bg-gradient: linear-gradient(135deg, #6C63FF 0%, #FF6584 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            padding: 2rem;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .category-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .resource-desc {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .mood-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-btn {
+                flex: 1;
+                min-width: 150px;
+            }
+        }
+
+        /* Dynamic Theme Colors */
+        .theme-calm { --primary: #4A90E2; --secondary: #7CE0D6; }
+        .theme-energetic { --primary: #FF6B6B; --secondary: #FFE66D; }
+        .theme-neutral { --primary: #6C63FF; --secondary: #FF6584; }
+    </style>
+</head>
+<body>
+    <div class="mood-indicator" id="moodIndicator"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Your Personalized Resources 🌟</h1>
+            <p>Curated suggestions based on your current mood</p>
+        </div>
+
+        <div class="category-selector">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="movies">🎬 Movies</button>
+            <button class="category-btn" data-category="music">🎵 Music</button>
+            <button class="category-btn" data-category="books">📚 Books</button>
+            <button class="category-btn" data-category="activities">🧘 Activities</button>
+        </div>
+
+        <div class="resources-grid" id="resourcesGrid">
+            <!-- Resources will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Simulated mood-based data
+        const resources = {
+            movies: [
+                { 
+                    title: "Peaceful Nature Documentaries",
+                    desc: "Relaxing visual journeys through nature",
+                    icon: "fa-film"
+                },
+                { 
+                    title: "Inspirational Biographies",
+                    desc: "Stories of resilience and triumph",
+                    icon: "fa-heart"
+                }
+            ],
+            music: [
+                {
+                    title: "Calming Piano Melodies",
+                    desc: "Soothing instrumental compositions",
+                    icon: "fa-music"
+                }
+            ],
+            books: [
+                {
+                    title: "The Power of Now",
+                    desc: "Mindfulness and present moment awareness",
+                    icon: "fa-book"
+                }
+            ],
+            activities: [
+                {
+                    title: "5-Minute Breathing Exercise",
+                    desc: "Reduce anxiety with guided breathing",
+                    icon: "fa-spa"
+                }
+            ]
+        };
+
+        // Initialize resources
+        function populateResources(category = 'all') {
+            const grid = document.getElementById('resourcesGrid');
+            grid.innerHTML = '';
+
+            for (const [cat, items] of Object.entries(resources)) {
+                if(category !== 'all' && category !== cat) continue;
+                
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'resource-card';
+                    card.innerHTML = `
+                        <i class="fas ${item.icon} resource-icon"></i>
+                        <h3 class="resource-title">${item.title}</h3>
+                        <p class="resource-desc">${item.desc}</p>
+                        <button class="category-btn">Explore</button>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                populateResources(btn.dataset.category);
+            });
+        });
+
+        // Dynamic theme based on mood (simulated)
+        const moods = ['calm', 'energetic', 'neutral'];
+        let currentMood = 0;
+        
+        function updateTheme() {
+    document.body.classList.remove(`theme-${moods[currentMood]}`);
+    currentMood = (currentMood + 1) % moods.length;
+    document.body.classList.add(`theme-${moods[currentMood]}`);
+    
+    document.getElementById('moodIndicator').style.backgroundColor = 
+        getComputedStyle(document.documentElement).getPropertyValue('--primary');
+}
+
+
+        // Initial setup
+        populateResources();
+        updateTheme();
+        setInterval(updateTheme, 5000);
+
+        // Responsive adjustments
+        window.addEventListener('resize', () => {
+            if(window.innerWidth < 768) {
+                document.querySelector('.category-selector').style.flexDirection = 'column';
+            } else {
+                document.querySelector('.category-selector').style.flexDirection = 'row';
+            }
+        });
+    </script>
+</body>
+</html>

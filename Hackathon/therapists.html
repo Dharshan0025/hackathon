@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate | Find Therapists</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5d5fef;
+            --primary-light: #8a8bf8;
+            --secondary: #ff7e5f;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --text: #333;
+            --text-light: #666;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .main-title {
+            text-align: center;
+            margin: 40px 0 30px;
+        }
+
+        .main-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .main-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(93, 95, 239, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-end;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .map-container {
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        #therapistsMap {
+            height: 100%;
+            width: 100%;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-btn i {
+            margin-right: 8px;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--light);
+        }
+
+        .therapists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .therapist-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .therapist-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .therapist-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .therapist-card:hover .therapist-img img {
+            transform: scale(1.05);
+        }
+
+        .therapist-info {
+            padding: 20px;
+        }
+
+        .therapist-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .therapist-specialty {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .therapist-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .therapist-location i {
+            margin-right: 8px;
+        }
+
+        .therapist-bio {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .therapist-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-right: 10px;
+        }
+
+        .rating-count {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .therapist-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .page-item {
+            margin: 0 5px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: white;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .page-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .page-link.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .main-title h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 10px 0;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: white;
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+                z-index: 99;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-title h1 {
+                font-size: 28px;
+            }
+
+            .therapists-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .main-title h1 {
+                font-size: 24px;
+            }
+
+            .therapist-card {
+                max-width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .animated-card:nth-child(1) { animation-delay: 0.1s; }
+        .animated-card:nth-child(2) { animation-delay: 0.2s; }
+        .animated-card:nth-child(3) { animation-delay: 0.3s; }
+        .animated-card:nth-child(4) { animation-delay: 0.4s; }
+        .animated-card:nth-child(5) { animation-delay: 0.5s; }
+        .animated-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode header,
+        body.dark-mode .search-section,
+        body.dark-mode .therapist-card,
+        body.dark-mode .page-link:not(.active) {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .form-control,
+        body.dark-mode .filter-btn {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .therapist-name,
+        body.dark-mode .form-group label {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .therapist-bio,
+        body.dark-mode .therapist-location,
+        body.dark-mode .rating-count {
+            color: #aaa;
+        }
+
+        body.dark-mode footer {
+            background-color: #0a0a0a;
+        }
+
+        /* Loading spinner */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i> MindMate
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="dashboard.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="journal.html"><i class="fas fa-book"></i> Journal</a></li>
+                        <li><a href="mindmate.html"><i class="fas fa-robot"></i> MindMate</a></li>
+                        <li><a href="therapists.html" class="active"><i class="fas fa-user-md"></i> Therapists</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                        <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="main-title">
+                <h1>Find Professional Help Nearby</h1>
+                <p>Connect with licensed therapists who can provide the support you need. All providers are vetted and verified.</p>
+            </section>
+
+            <section class="search-section">
+                <form class="search-form" id="therapistSearchForm">
+                    <div class="form-group">
+                        <label for="specialty">Specialty</label>
+                        <select class="form-control" id="specialty">
+                            <option value="">All Specialties</option>
+                            <option value="depression">Depression</option>
+                            <option value="anxiety">Anxiety</option>
+                            <option value="trauma">Trauma</option>
+                            <option value="relationships">Relationships</option>
+                            <option value="stress">Stress Management</option>
+                            <option value="lgbtq">LGBTQ+ Issues</option>
+                            <option value="addiction">Addiction</option>
+                            <option value="eating">Eating Disorders</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="City or ZIP code">
+                    </div>
+                    <div class="form-group">
+                        <label for="language">Language</label>
+                        <select class="form-control" id="language">
+                            <option value="">All Languages</option>
+                            <option value="english">English</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="hindi">Hindi</option>
+                            <option value="mandarin">Mandarin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="insurance">Insurance</label>
+                        <select class="form-control" id="insurance">
+                            <option value="">Any Insurance</option>
+                            <option value="aetna">Aetna</option>
+                            <option value="bluecross">Blue Cross</option>
+                            <option value="cigna">Cigna</option>
+                            <option value="medicare">Medicare</option>
+                            <option value="selfpay">Self Pay</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Search</button>
+                </form>
+            </section>
+
+            <section class="map-container">
+                <div id="therapistsMap"></div>
+                <div class="map-overlay">
+                    <button class="filter-btn" id="mapFilterBtn">
+                        <i class="fas fa-filter"></i> Filters
+                    </button>
+                </div>
+            </section>
+
+            <section class="therapists-results">
+                <h2 class="section-title">Recommended Therapists</h2>
+                <div class="therapists-grid" id="therapistsGrid">
+                    <!-- Therapist cards will be inserted here by JavaScript -->
+                </div>
+
+                <div class="pagination">
+                    <ul>
+                        <li class="page-item"><a href="#" class="page-link active">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">4</a></li>
+                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MindMate</h3>
+                    <p>Your personal mental health companion, providing support, resources, and professional connections when you need them most.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="journal.html">Journal</a></li>
+                        <li><a href="mindmate.html">MindMate AI</a></li>
+                        <li><a href="therapists.html">Find Therapists</a></li>
+                        <li><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Mental Health Tips</a></li>
+                        <li><a href="#">Emergency Contacts</a></li>
+                        <li><a href="#">Self-Care Guide</a></li>
+                        <li><a href="#">Therapy FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@mindmate.com"><i class="fas fa-envelope"></i> support@mindmate.com</a></li>
+                        <li><a href="tel:+18005551234"><i class="fas fa-phone"></i> 1-800-555-1234</a></li>
+                        <li>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MindMate. All rights reserved. Mental health support for everyone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Leaflet JS for maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Dark mode detection
+        function checkDarkMode() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentHour = new Date().getHours();
+            const isNightTime = currentHour >= 18 || currentHour <= 6;
+            
+            if (prefersDark || isNightTime) {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        // Initialize dark mode check
+        checkDarkMode();
+
+        // Therapist data (in a real app, this would come from an API)
+        const therapists = [
+            {
+                id: 1,
+                name: "Dr. Sarah Johnson",
+                specialty: "Depression & Anxiety",
+                bio: "Licensed clinical psychologist with 12 years of experience helping clients manage mood disorders and life transitions.",
+                location: "New York, NY",
+                distance: "0.8 miles",
+                rating: 4.9,
+                reviews: 127,
+                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English", "Spanish"],
+                insurance: ["Aetna", "Blue Cross", "Cigna"],
+                coordinates: [40.7128, -74.0060]
+            },
+            {
+                id: 2,
+                name: "Dr. Michael Chen",
+                specialty: "Trauma & PTSD",
+                bio: "Specializes in EMDR therapy for trauma survivors. Passionate about helping clients heal from past experiences.",
+                location: "New York, NY",
+                distance: "1.2 miles",
+                rating: 4.8,
+                reviews: 94,
+                image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English", "Mandarin"],
+                insurance: ["Blue Cross", "Medicare", "Self Pay"],
+                coordinates: [40.7200, -74.0040]
+            },
+            {
+                id: 3,
+                name: "Lisa Rodriguez, LCSW",
+                specialty: "Relationships & Family",
+                bio: "Family therapist focusing on communication skills and conflict resolution. LGBTQ+ affirming practice.",
+                location: "New York, NY",
+                distance: "2.1 miles",
+                rating: 4.7,
+                reviews: 68,
+                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English", "Spanish"],
+                insurance: ["Aetna", "Cigna", "Self Pay"],
+                coordinates: [40.7150, -74.0080]
+            },
+            {
+                id: 4,
+                name: "Dr. James Wilson",
+                specialty: "Stress & Burnout",
+                bio: "Helps high-achieving professionals manage stress and prevent burnout through evidence-based techniques.",
+                location: "New York, NY",
+                distance: "1.5 miles",
+                rating: 4.9,
+                reviews: 112,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English"],
+                insurance: ["Aetna", "Blue Cross", "Medicare"],
+                coordinates: [40.7180, -74.0020]
+            },
+            {
+                id: 5,
+                name: "Priya Patel, LMFT",
+                specialty: "Cultural Identity",
+                bio: "Focuses on issues of cultural identity, immigration, and intergenerational family dynamics.",
+                location: "New York, NY",
+                distance: "3.0 miles",
+                rating: 4.8,
+                reviews: 76,
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English", "Hindi"],
+                insurance: ["Blue Cross", "Self Pay"],
+                coordinates: [40.7250, -74.0100]
+            },
+            {
+                id: 6,
+                name: "Dr. David Kim",
+                specialty: "Addiction Recovery",
+                bio: "Specializes in substance abuse and behavioral addictions with a compassionate, non-judgmental approach.",
+                location: "New York, NY",
+                distance: "2.3 miles",
+                rating: 4.7,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                languages: ["English", "Korean"],
+                insurance: ["Aetna", "Cigna", "Medicare"],
+                coordinates: [40.7220, -74.0050]
+            }
+        ];
+
+        // Initialize map
+        function initMap() {
+            const map = L.map('therapistsMap').setView([40.7128, -74.0060], 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add markers for each therapist
+            therapists.forEach(therapist => {
+                const marker = L.marker(therapist.coordinates).addTo(map);
+                marker.bindPopup(`
+                    <b>${therapist.name}</b><br>
+                    ${therapist.specialty}<br>
+                    Rating: ${therapist.rating} ★ (${therapist.reviews} reviews)<br>
+                    <a href="#" class="view-profile" data-id="${therapist.id}">View profile</a>
+                `);
+            });
+        }
+
+        // Render therapist cards
+        function renderTherapists(filteredTherapists = therapists) {
+            const therapistsGrid = document.getElementById('therapistsGrid');
+            therapistsGrid.innerHTML = '';
+            
+            filteredTherapists.forEach((therapist, index) => {
+                const card = document.createElement('div');
+                card.className = 'therapist-card animated-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                // Generate star rating HTML
+                const fullStars = Math.floor(therapist.rating);
+                const hasHalfStar = therapist.rating % 1 >= 0.5;
+                let starsHtml = '';
+                
+                for (let i = 0; i < fullStars; i++) {
+                    starsHtml += '<i class="fas fa-star"></i>';
+                }
+                
+                if (hasHalfStar) {
+                    starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                }
+                
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHtml += '<i class="far fa-star"></i>';
+                }
+                
+                card.innerHTML = `
+                    <div class="therapist-img">
+                        <img src="${therapist.image}" alt="${therapist.name}">
+                    </div>
+                    <div class="therapist-info">
+                        <h3 class="therapist-name">${therapist.name}</h3>
+                        <span class="therapist-specialty">${therapist.specialty}</span>
+                        <div class="therapist-location">
+                            <i class="fas fa-map-marker-alt"></i> ${therapist.location} (${therapist.distance} away)
+                        </div>
+                        <p class="therapist-bio">${therapist.bio}</p>
+                        <div class="therapist-rating">
+                            <div class="stars">${starsHtml}</div>
+                            <span class="rating-count">${therapist.reviews} reviews</span>
+                        </div>
+                        <div class="therapist-actions">
+                            <button class="btn btn-outline btn-sm" onclick="viewTherapistProfile(${therapist.id})">
+                                <i class="fas fa-user"></i> Profile
+                            </button>
+                            <button class="btn btn-sm" onclick="bookAppointment(${therapist.id})">
+                                <i class="fas fa-calendar-check"></i> Book
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                therapistsGrid.appendChild(card);
+            });
+        }
+
+        // View therapist profile
+        function viewTherapistProfile(id) {
+            // In a real app, this would navigate to a therapist profile page
+            const therapist = therapists.find(t => t.id === id);
+            if (therapist) {
+                alert(`Viewing profile for ${therapist.name}\nSpecialty: ${therapist.specialty}\nLocation: ${therapist.location}`);
+            }
+        }
+
+        // Book appointment
+        function bookAppointment(id) {
+            // In a real app, this would open a booking modal
+            const therapist = therapists.find(t => t.id === id);
+            if (therapist) {
+                alert(`Booking appointment with ${therapist.name}\nWe'll redirect you to their scheduling system.`);
+            }
+        }
+
+        // Filter therapists
+        function filterTherapists() {
+            const specialty = document.getElementById('specialty').value.toLowerCase();
+            const location = document.getElementById('location').value.toLowerCase();
+            const language = document.getElementById('language').value.toLowerCase();
+            const insurance = document.getElementById('insurance').value.toLowerCase();
+            
+            const filtered = therapists.filter(therapist => {
+                return 
+                    (specialty === '' || therapist.specialty.toLowerCase().includes(specialty)) &&
+                    (location === '' || therapist.location.toLowerCase().includes(location)) &&
+                    (language === '' || therapist.languages.some(lang => lang.toLowerCase().includes(language))) &&
+                    (insurance === '' || therapist.insurance.some(ins => ins.toLowerCase().includes(insurance)))
+            });
+            
+            renderTherapists(filtered);
+            
+            // Show message if no results
+            if (filtered.length === 0) {
+                document.getElementById('therapistsGrid').innerHTML = `
+                    <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                        <i class="fas fa-search" style="font-size: 50px; color: #ccc; margin-bottom: 20px;"></i>
+                        <h3>No therapists found matching your criteria</h3>
+                        <p>Try adjusting your filters or expanding your search area</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Show loading spinner
+        function showLoader() {
+            document.getElementById('loader').classList.add('active');
+        }
+
+        // Hide loading spinner
+        function hideLoader() {
+            document.getElementById('loader').classList.remove('active');
+        }
+
+        // Simulate API call with loading
+        function simulateSearch() {
+            showLoader();
+            setTimeout(() => {
+                filterTherapists();
+                hideLoader();
+            }, 1000);
+        }
+
+        // Event listeners
+        document.getElementById('therapistSearchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            simulateSearch();
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            renderTherapists();
+            
+            // Set up filter button
+            document.getElementById('mapFilterBtn').addEventListener('click', function() {
+                document.getElementById('therapistSearchForm').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

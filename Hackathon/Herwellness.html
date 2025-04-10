@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerWellness | MindMate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b8b;
+            --secondary-color: #ffb8c6;
+            --accent-color: #ff4757;
+            --dark-color: #2f3542;
+            --light-color: #f1f2f6;
+            --success-color: #2ed573;
+            --warning-color: #ffa502;
+            --info-color: #1e90ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f1f1f1;
+        }
+
+        body.dark-mode .wellness-card {
+            background: #2d2d2d;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .tab-button {
+            background: #333;
+            color: #f1f1f1;
+        }
+
+        body.dark-mode .tab-button.active {
+            background: var(--primary-color);
+        }
+
+        body.dark-mode .resource-item {
+            background: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .nav-links a {
+            color: #f1f1f1;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .mode-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .mode-toggle {
+            color: #f1f1f1;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .tab-button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wellness-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+        }
+
+        .wellness-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .wellness-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wellness-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .card-button {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .card-button:hover {
+            background: var(--accent-color);
+        }
+
+        .cycle-tracker {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode .cycle-tracker {
+            background: #2d2d2d;
+        }
+
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tracker-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .tracker-days {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .day {
+            min-width: 50px;
+            height: 70px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        body.dark-mode .day {
+            background: #333;
+        }
+
+        .day.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .day.period {
+            background: #ff6b8b;
+            color: white;
+        }
+
+        .day.fertile {
+            background: #ffd166;
+            color: var(--dark-color);
+        }
+
+        .day.ovulation {
+            background: #06d6a0;
+            color: white;
+        }
+
+        .day-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .day-name {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .tracker-legend {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .resources-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-type {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .resource-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .resource-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .resource-desc {
+            color: #ccc;
+        }
+
+        .resource-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .resource-link i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .resource-link:hover i {
+            transform: translateX(5px);
+        }
+
+        .emergency-section {
+            background: linear-gradient(135deg, #ff6b8b, #ff4757);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .emergency-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .emergency-title i {
+            margin-right: 15px;
+        }
+
+        .emergency-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .emergency-button {
+            padding: 12px 25px;
+            background: white;
+            color: var(--accent-color);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .emergency-button i {
+            margin-right: 8px;
+        }
+
+        .emergency-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .floating-avatar {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .floating-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .avatar-tooltip {
+            position: absolute;
+            right: 80px;
+            bottom: 0;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .avatar-tooltip {
+            background: #333;
+            color: white;
+        }
+
+        .floating-avatar:hover .avatar-tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: 10px;
+        }
+
+        .mood-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            padding: 8px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+
+        body.dark-mode .mood-indicator {
+            background: #333;
+        }
+
+        .mood-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .mood-icon.happy {
+            background: #2ecc71;
+        }
+
+        .mood-icon.neutral {
+            background: #f39c12;
+        }
+
+        .mood-icon.sad {
+            background: #e74c3c;
+        }
+
+        .mood-text {
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .wellness-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tracker-days {
+                gap: 5px;
+            }
+            
+            .day {
+                min-width: 40px;
+                height: 60px;
+            }
+            
+            .emergency-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Animation classes */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mood Indicator -->
+    <div class="mood-indicator">
+        <div class="mood-icon happy">
+            <i class="fas fa-smile"></i>
+        </div>
+        <div class="mood-text">You're feeling good today!</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <span>HerWellness</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+                <a href="journal.html"><i class="fas fa-book"></i> Journal</a>
+                <a href="mindmate.html"><i class="fas fa-robot"></i> MindMate</a>
+                <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+            </div>
+            <button class="mode-toggle" id="modeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <div class="hero">
+            <h1>Your Wellness Journey</h1>
+            <p>Empowering women through every phase of life with personalized support, resources, and care.</p>
+            <button class="card-button pulse" onclick="openMindMate()">Talk to MindMate <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="cycle">Cycle Tracker</button>
+            <button class="tab-button" data-tab="pregnancy">Pregnancy Support</button>
+            <button class="tab-button" data-tab="resources">Wellness Resources</button>
+            <button class="tab-button" data-tab="community">Community</button>
+        </div>
+
+        <div class="tab-content active" id="cycle">
+            <div class="wellness-section">
+                <div class="cycle-tracker">
+                    <div class="tracker-header">
+                        <h2 class="tracker-title">Your Cycle Tracker</h2>
+                        <button class="card-button" onclick="logSymptoms()">Log Symptoms</button>
+                    </div>
+                    <p>Track your menstrual cycle, symptoms, and moods to better understand your body's patterns.</p>
+                    
+                    <div class="tracker-days" id="cycleDays">
+                        <!-- Days will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="tracker-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ff6b8b;"></div>
+                            <span>Period</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #06d6a0;"></div>
+                            <span>Ovulation</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ffd166;"></div>
+                            <span>Fertile Window</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f8f9fa;"></div>
+                            <span>Normal Days</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wellness-section">
+                <h2 class="section-title">
+                    <i class="fas fa-heartbeat"></i>
+                    Period Wellness
+                </h2>
+                <div class="wellness-cards">
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <h3 class="card-title">Pain Relief</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Discover natural and medical solutions to manage period pain effectively.</p>
+                        </div>
+                        <button class="card-button" onclick="showResources('pain')">Explore Options</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <h3 class="card-title">Nutrition Guide</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Foods that can help reduce bloating, cramps, and mood swings during your cycle.</p>
+                        </div>
+                        <button class="card-button" onclick="showResources('nutrition')">View Foods</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <h3 class="card-title">Self-Care Rituals</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Gentle exercises, meditation, and relaxation techniques for your period days.</p>
+                        </div>
+                        <button class="card-button" onclick="showResources('selfcare')">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pregnancy">
+            <div class="wellness-section">
+                <h2 class="section-title">
+                    <i class="fas fa-baby"></i>
+                    Pregnancy Support
+                </h2>
+                <div class="wellness-cards">
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3 class="card-title">Pregnancy Tracker</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Track your pregnancy week by week with personalized insights and tips.</p>
+                        </div>
+                        <button class="card-button" onclick="startPregnancyTracker()">Start Tracker</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="card-title">Mental Wellness</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Resources to support your mental health during pregnancy and postpartum.</p>
+                        </div>
+                        <button class="card-button" onclick="showResources('pregnancy-mental')">Get Support</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h3 class="card-title">Partner Resources</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Guide for partners to support you through the pregnancy journey.</p>
+                        </div>
+                        <button class="card-button" onclick="showResources('partner')">View Guide</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="resources">
+            <div class="wellness-section">
+                <h2 class="section-title">
+                    <i class="fas fa-book-open"></i>
+                    Wellness Resources
+                </h2>
+                <div class="resources-list">
+                    <div class="resource-item">
+                        <span class="resource-type">Article</span>
+                        <h3 class="resource-title">10 Yoga Poses for Period Relief</h3>
+                        <p class="resource-desc">Gentle yoga poses that can help alleviate menstrual cramps and improve mood.</p>
+                        <a href="#" class="resource-link">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <span class="resource-type">Podcast</span>
+                        <h3 class="resource-title">Pregnancy & Mental Health</h3>
+                        <p class="resource-desc">Experts discuss managing anxiety and mood changes during pregnancy.</p>
+                        <a href="#" class="resource-link">Listen Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <span class="resource-type">Video</span>
+                        <h3 class="resource-title">Meditation for Hormonal Balance</h3>
+                        <p class="resource-desc">15-minute guided meditation to help regulate your cycle naturally.</p>
+                        <a href="#" class="resource-link">Watch Video <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <span class="resource-type">Book</span>
+                        <h3 class="resource-title">The Period Repair Manual</h3>
+                        <p class="resource-desc">A comprehensive guide to better periods through natural treatments.</p>
+                        <a href="#" class="resource-link">View Book <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="community">
+            <div class="wellness-section">
+                <h2 class="section-title">
+                    <i class="fas fa-users"></i>
+                    Community Support
+                </h2>
+                <div class="wellness-cards">
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 class="card-title">Anonymous Forum</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Connect with other women sharing similar experiences in a safe, anonymous space.</p>
+                        </div>
+                        <button class="card-button" onclick="openCommunity()">Join Discussion</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <h3 class="card-title">Support Groups</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Find local or online support groups for pregnancy, postpartum, and women's health.</p>
+                        </div>
+                        <button class="card-button" onclick="findSupportGroups()">Find Groups</button>
+                    </div>
+                    
+                    <div class="wellness-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3 class="card-title">Success Stories</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Read inspiring stories from women who've overcome challenges similar to yours.</p>
+                        </div>
+                        <button class="card-button" onclick="showSuccessStories()">Read Stories</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-section">
+            <div class="emergency-content">
+                <h2 class="emergency-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Need Immediate Help?
+                </h2>
+                <p>If you're experiencing severe distress, depression, or need to talk to someone immediately, these resources are available 24/7.</p>
+                
+                <div class="emergency-buttons">
+                    <button class="emergency-button" onclick="callHelpline()">
+                        <i class="fas fa-phone"></i> Call Helpline
+                    </button>
+                    <button class="emergency-button" onclick="chatWithCounselor()">
+                        <i class="fas fa-comment-medical"></i> Chat Now
+                    </button>
+                    <button class="emergency-button" onclick="locateNearestHospital()">
+                        <i class="fas fa-hospital"></i> Find Hospital
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Avatar -->
+    <div class="floating-avatar" id="floatingAvatar">
+        <i class="fas fa-robot"></i>
+        <div class="avatar-tooltip">
+            <p>Hi there! I'm MindMate. Tap here if you need to talk about anything.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+        const icon = modeToggle.querySelector('i');
+        
+        // Check for saved user preference or use system preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const currentMode = localStorage.getItem('mode') || (prefersDark ? 'dark' : 'light');
+        
+        if (currentMode === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+        
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('mode', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('mode', 'light');
+            }
+        });
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Generate cycle days
+        const cycleDaysContainer = document.getElementById('cycleDays');
+        const today = new Date();
+        const currentDay = today.getDate();
+        
+        function generateCycleDays() {
+            cycleDaysContainer.innerHTML = '';
+            
+            // Sample data - in a real app, this would come from user's cycle data
+            const cycleLength = 28;
+            const periodStartDay = 1;
+            const periodLength = 5;
+            const ovulationDay = 14;
+            const fertileStart = ovulationDay - 5;
+            const fertileEnd = ovulationDay + 2;
+            
+            for (let i = 1; i <= cycleLength; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                
+                // Mark different cycle phases
+                if (i >= periodStartDay && i < periodStartDay + periodLength) {
+                    dayElement.classList.add('period');
+                } else if (i === ovulationDay) {
+                    dayElement.classList.add('ovulation');
+                } else if (i >= fertileStart && i <= fertileEnd) {
+                    dayElement.classList.add('fertile');
+                }
+                
+                // Highlight today
+                if (i === currentDay) {
+                    dayElement.classList.add('active');
+                    dayElement.innerHTML = `
+                        <div class="day-number">${i}</div>
+                        <div class="day-name">Today</div>
+                    `;
+                } else {
+                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    const dayName = dayNames[(i - 1) % 7];
+                    
+                    dayElement.innerHTML = `
+                        <div class="day-number">${i}</div>
+                        <div class="day-name">${dayName}</div>
+                    `;
+                }
+                
+                dayElement.addEventListener('click', () => {
+                    document.querySelectorAll('.day').forEach(day => day.classList.remove('active'));
+                    dayElement.classList.add('active');
+                    logDayDetails(i);
+                });
+                
+                cycleDaysContainer.appendChild(dayElement);
+            }
+        }
+        
+        function logDayDetails(day) {
+            // In a real app, this would show details for the selected day
+            console.log(`Day ${day} selected`);
+            // You could show a modal with symptoms, moods, etc. for that day
+        }
+
+        // Initialize cycle tracker
+        generateCycleDays();
+
+        // Sample functions for buttons
+        function openMindMate() {
+            alert("Redirecting to MindMate chat...");
+            // In a real app: window.location.href = "mindmate.html";
+        }
+
+        function logSymptoms() {
+            alert("Opening symptom logging form...");
+            // In a real app: show a modal form to log symptoms
+        }
+
+        function showResources(type) {
+            alert(`Showing resources for: ${type}`);
+            // In a real app: filter and display relevant resources
+        }
+
+        function startPregnancyTracker() {
+            alert("Starting pregnancy tracker...");
+            // In a real app: initialize pregnancy tracking with due date, etc.
+        }
+
+        function openCommunity() {
+            alert("Opening community forum...");
+            // In a real app: window.location.href = "community.html";
+        }
+
+        function findSupportGroups() {
+            alert("Finding support groups near you...");
+            // In a real app: use location API to find nearby groups
+        }
+
+        function showSuccessStories() {
+            alert("Showing success stories...");
+            // In a real app: display inspirational stories
+        }
+
+        function callHelpline() {
+            alert("Connecting to women's health helpline...");
+            // In a real app: initiate phone call to helpline
+        }
+
+        function chatWithCounselor() {
+            alert("Opening chat with counselor...");
+            // In a real app: open live chat interface
+        }
+
+        function locateNearestHospital() {
+            alert("Finding nearest hospitals...");
+            // In a real app: use geolocation to show nearby medical facilities
+        }
+
+        // Floating avatar interaction
+        const floatingAvatar = document.getElementById('floatingAvatar');
+        floatingAvatar.addEventListener('click', openMindMate);
+
+        // Check time for auto dark mode
+        function checkTimeForDarkMode() {
+            const hours = new Date().getHours();
+            const isNightTime = hours < 6 || hours > 18; // 6pm to 6am
+            
+            if (isNightTime && !body.classList.contains('dark-mode')) {
+                body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('mode', 'dark');
+            }
+        }
+
+        // Run time check on load
+        checkTimeForDarkMode();
+
+        // Animation for wellness cards on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.wellness-card, .resource-item').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Simulate mood detection - in a real app this would come from AI analysis
+        function simulateMoodDetection() {
+            const moods = [
+                { type: 'happy', icon: 'fa-smile', text: "You're feeling good today!" },
+                { type: 'neutral', icon: 'fa-meh', text: "You seem neutral today." },
+                { type: 'sad', icon: 'fa-frown', text: "You seem a bit down today." }
+            ];
+            
+            const randomMood = moods[Math.floor(Math.random() * moods.length)];
+            const moodIndicator = document.querySelector('.mood-indicator');
+            const moodIcon = moodIndicator.querySelector('.mood-icon');
+            const moodText = moodIndicator.querySelector('.mood-text');
+            
+            moodIcon.className = 'mood-icon ' + randomMood.type;
+            moodIcon.innerHTML = `<i class="fas ${randomMood.icon}"></i>`;
+            moodText.textContent = randomMood.text;
+            
+            // Add shake animation if sad
+            if (randomMood.type === 'sad') {
+                moodIndicator.classList.add('shake');
+                setTimeout(() => {
+                    moodIndicator.classList.remove('shake');
+                }, 1000);
+            }
+        }
+
+        // Run mood simulation on load
+        simulateMoodDetection();
+    </script>
+</body>
+</html>

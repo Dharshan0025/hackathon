@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - Emergency Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Emergency Color Scheme */
+        :root {
+            --emergency-red: #ff3366;
+            --calm-blue: #4A90E2;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .emergency-header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .emergency-pulse {
+            width: 120px;
+            height: 120px;
+            background: var(--emergency-red);
+            border-radius: 50%;
+            margin: 2rem auto;
+            animation: pulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 51, 102, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(255, 51, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 51, 102, 0); }
+        }
+
+        .emergency-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .emergency-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .emergency-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--calm-blue);
+        }
+
+        .emergency-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--calm-blue);
+        }
+
+        .contact-list {
+            text-align: left;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .contact-item {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .consent-check {
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .emergency-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .emergency-pulse {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #0a0a1a 0%, #000000 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emergency-header">
+            <h1 class="floating">🛟 Need Immediate Help?</h1>
+            <p class="floating">You're not alone - we're here to help</p>
+            <div class="emergency-pulse" id="emergencyButton">
+                <i class="fas fa-life-ring fa-3x"></i>
+            </div>
+        </div>
+
+        <div class="consent-check" id="consentSection">
+            <input type="checkbox" id="consentCheckbox">
+            <label for="consentCheckbox">I consent to share my location and basic information with emergency services</label>
+        </div>
+
+        <div class="emergency-options">
+            <div class="emergency-card" onclick="showContacts('trusted')">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h3>Trusted Contacts</h3>
+                <p>Reach out to your pre-approved emergency contacts</p>
+                <div class="contact-list" id="trustedContacts">
+                    <div class="contact-item">
+                        <i class="fas fa-user"></i>
+                        <span>Mom (+91 98765 43210)</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-user"></i>
+                        <span>Best Friend (+91 98765 43211)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emergency-card" onclick="showContacts('helpline')">
+                <i class="fas fa-phone-alt"></i>
+                <h3>24/7 Helplines</h3>
+                <p>Connect with professional support</p>
+                <div class="contact-list" id="helplineContacts">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Mental Health Helpline: 1800-123-456</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Women's Helpline: 1091</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="emergency-card" id="therapyButton" style="width: 100%; margin-top: 2rem;">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Nearest Therapist</h3>
+            <p>Find professional help near you</p>
+            <div id="locationStatus">Locating... <i class="fas fa-sync fa-spin"></i></div>
+        </button>
+    </div>
+
+    <script>
+        // Simulated emergency contacts
+        const contacts = {
+            trusted: [
+                { name: "Mom", number: "+91 98765 43210" },
+                { name: "Best Friend", number: "+91 98765 43211" }
+            ],
+            helpline: [
+                { name: "Mental Health Helpline", number: "1800-123-456" },
+                { name: "Women's Helpline", number: "1091" }
+            ]
+        };
+
+        // Emergency button handler
+        document.getElementById('emergencyButton').addEventListener('click', () => {
+            if(document.getElementById('consentCheckbox').checked) {
+                alert('Help is on the way! Our team will contact you immediately.');
+                // Add actual emergency API call here
+            } else {
+                alert('Please consent to share information for emergency support');
+            }
+        });
+
+        // Show contact lists
+        function showContacts(type) {
+            const allLists = document.querySelectorAll('.contact-list');
+            allLists.forEach(list => list.style.display = 'none');
+            
+            const targetList = document.getElementById(`${type}Contacts`);
+
+            if(targetList.style.display === 'block') {
+                targetList.style.display = 'none';
+            } else {
+                targetList.style.display = 'block';
+            }
+        }
+
+        // Simulate location detection
+        setTimeout(() => {
+            document.getElementById('locationStatus').innerHTML = 
+                '<i class="fas fa-check"></i> 3 therapists found within 5km';
+        }, 2000);
+
+        // Dark mode based on time
+        const hour = new Date().getHours();
+        if(hour > 18 || hour < 6) {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Consent reminder
+        setInterval(() => {
+            if(!document.getElementById('consentCheckbox').checked) {
+                document.getElementById('consentSection').style.animation = 
+                    'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    document.getElementById('consentSection').style.animation = '';
+                }, 500);
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
