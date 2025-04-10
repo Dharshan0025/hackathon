@@ -730,6 +730,7 @@
                         </button>
                     </div>
                 </div>
+            
 
                 <div class="card mindmate-card fade-in" style="animation-delay: 0.2s;">
                     <div class="card-header">
@@ -833,6 +834,33 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // Targets ONLY the "Explore" button in the resources card
+    const exploreBtn = document.querySelector('.resources-card .btn-outline');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', () => {
+            window.location.href = 'resources.html';
+        });
+    }
+});
+        document.addEventListener('DOMContentLoaded', () => {
+    // Targets ONLY the "Start Chat" button in the MindMate card
+    const chatBtn = document.querySelector('.mindmate-card .btn-primary');
+    if (chatBtn) {
+        chatBtn.addEventListener('click', () => {
+            window.location.href = 'mindmate.html';
+        });
+    }
+});
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const newEntryBtn = document.querySelector('.journal-card .btn-primary');
+    if (newEntryBtn) {
+        newEntryBtn.addEventListener('click', () => {
+            window.location.href = 'journal.html';
+        });
+    }
+});
         document.addEventListener('DOMContentLoaded', function() {
             // Get user data from localStorage (set during onboarding)
             const userData = JSON.parse(localStorage.getItem('mindMateUser')) || {
